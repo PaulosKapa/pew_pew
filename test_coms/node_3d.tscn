@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbeb611o5kpxw"]
+
+[ext_resource type="Script" path="res://communications.gd" id="1_10qxq"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_10qxq")
+
+[node name="TextEdit" type="Label" parent="."]
+offset_right = 82.0
+offset_bottom = 44.0
+text = "dfsdfsd"
