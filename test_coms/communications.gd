@@ -1,18 +1,21 @@
-extends Node2D
+extends Node
 
-var udp := PacketPeerUDP.new()
-var connected = false
+# Configure the UDP socket for receiving data from Python
+var python_address : String = "127.0.0.1"
+var python_port : int = 12345
+var python_socket := PacketPeerUDP.new()
 
 func _ready():
-	OS.execute("python3",["test.py"])
-	udp.connect_to_host("127.0.0.1", 12345)
-	
+	# Bind the socket to the specified address and port
+	python_socket.bind(python_port, python_address)
 
 func _process(delta):
-	print(connected)
-	if !connected:
-		# Try to contact server
-		udp.put_packet("The answer is... 42!".to_utf8_buffer())
-	if udp.get_available_packet_count() > 0:
-		print("Connected: %s" % udp.get_packet().get_string_from_utf8())
-		connected = true
+	# Check for incoming data
+	if python_socket.get_available_packet_count() > 0:
+		# Receive data from Python
+		#var data : PacketPeerUDP = python_socket.get_packet()
+		var data = python_socket.get_packet()
+		
+		# Process the received data as needed
+		var decoded_data : String = data.get_string_from_utf8()
+		print("Received data from Python: ", decoded_data)
