@@ -1,0 +1,6 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1700874247
+icon.svg::CompressedTexture2D::2850322892898651941::1700650111::1700874248::1::::<><>::
+node_3d.tscn::PackedScene::7909014634745014890::1700650111::0::1::::<><>::res://RayCast3D.gd
+RayCast3D.gd::GDScript::-1::1700650111::0::1::::<>RayCast3D<>::
+RigidBody3D.gd::GDScript::-1::1700650111::0::1::::<>RigidBody3D<>::
