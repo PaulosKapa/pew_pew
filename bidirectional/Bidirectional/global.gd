@@ -18,10 +18,10 @@ func _process(delta):
 		#var data : PacketPeerUDP = python_socket.get_packet()
 		var data = python_socket.get_packet()
 		print(data)
-		# Process the received data as needed
-		var decoded_data : String = data.get_string_from_utf8()
-		
-		data_list = decoded_data.split(",")
-		#print(data_list)
 		begin = true
+	if Input.is_action_just_pressed("enter"):
+		var a : PackedByteArray = [1]
+		print(a)
+	
+		python_socket.put_packet(a)
 
