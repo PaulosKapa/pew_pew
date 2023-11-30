@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://l24vmjtk2ixm"]
 
-[ext_resource type="Script" path="res://test_map.gd" id="1_27lue"]
-[ext_resource type="PackedScene" uid="uid://ssr7a3wbpq08" path="res://floor.tscn" id="2_ts1h3"]
-[ext_resource type="PackedScene" uid="uid://bsub5pb4oxxe6" path="res://enemy.tscn" id="3_t74vk"]
-[ext_resource type="PackedScene" uid="uid://dic3ivxty2onk" path="res://wall.tscn" id="4_t8wra"]
-[ext_resource type="PackedScene" uid="uid://0hs7flhblwvn" path="res://prop.tscn" id="5_ng40l"]
+[ext_resource type="Script" path="res://code/test_map.gd" id="1_27lue"]
+[ext_resource type="PackedScene" uid="uid://ssr7a3wbpq08" path="res://scenes/floor.tscn" id="2_ts1h3"]
+[ext_resource type="PackedScene" uid="uid://bsub5pb4oxxe6" path="res://scenes/enemy.tscn" id="3_t74vk"]
+[ext_resource type="PackedScene" uid="uid://dic3ivxty2onk" path="res://scenes/wall.tscn" id="4_t8wra"]
+[ext_resource type="PackedScene" uid="uid://0hs7flhblwvn" path="res://scenes/prop.tscn" id="5_ng40l"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ucplk"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -119,8 +119,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6738, 0, 4.29353)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.78434, 0, 6.43977)
 
 [node name="Prop" parent="prop_spawner/spawner5" instance=ExtResource("5_ng40l")]
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-2.27669e-08, -0.853651, 0.520846, -3.73143e-08, 0.520846, 0.853651, -1, -1.42109e-14, -4.37114e-08, 26.984, 23.022, 0)
 
 [connection signal="timeout" from="Enemy/Timer" to="." method="_on_timer_timeout"]

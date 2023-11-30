@@ -6,6 +6,7 @@ var floors = [Global.test_floor]
 var walls = [Global.test_wall]
 var props = [Global.test_prop]
 var enemies = [Global.test_enemy]
+var player = Global.player
 
 func _ready():
 	$floor_spawner.add_child(floors.pick_random().instantiate())
@@ -24,6 +25,8 @@ func _ready():
 	$prop_spawner/spawner3.add_child(props.pick_random().instantiate())
 	$prop_spawner/spawner4.add_child(props.pick_random().instantiate())
 	$prop_spawner/spawner5.add_child(props.pick_random().instantiate())
+	add_child(player)
+	
 	$Enemy/Timer.start()
 
 func _process(delta):
