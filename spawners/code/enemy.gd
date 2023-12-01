@@ -50,3 +50,4 @@ func shoot():
 				if(int(AP-(distance/10))>0):
 					hit.set_health(hit.get_health()-int(AP-(distance/10)))
 				await get_tree().create_timer(fire_rate).timeout
+

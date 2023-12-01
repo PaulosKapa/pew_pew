@@ -25,7 +25,7 @@ func _ready():
 	$prop_spawner/spawner3.add_child(props.pick_random().instantiate())
 	$prop_spawner/spawner4.add_child(props.pick_random().instantiate())
 	$prop_spawner/spawner5.add_child(props.pick_random().instantiate())
-	add_child(player)
+	add_child(player.instantiate())
 	
 	$Enemy/Timer.start()
 

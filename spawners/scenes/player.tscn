@@ -1,14 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://wyia2heh8blq"]
 
 [ext_resource type="Script" path="res://code/Camera3D.gd" id="1_bbccm"]
-[ext_resource type="Script" path="res://code/RayCast3D.gd" id="2_k7wov"]
+[ext_resource type="Script" path="res://code/player.gd" id="1_oicxo"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1rt01"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4v25j"]
 size = Vector3(1, 2.005, 1)
 
-[node name="Player" type="RigidBody3D"]
+[node name="Player" type="RigidBody3D" groups=["player"]]
+script = ExtResource("1_oicxo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_1rt01")
@@ -18,7 +19,6 @@ script = ExtResource("1_bbccm")
 
 [node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D/Camera3D"]
 target_position = Vector3(0, 0, -20)
-script = ExtResource("2_k7wov")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_4v25j")
