@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://bl2lr1vlc5ep0"]
+
+[ext_resource type="PackedScene" uid="uid://cq7of1yslvtqi" path="res://scenes/map1.tscn" id="1_qdhku"]
+
+[node name="Test_map" instance=ExtResource("1_qdhku")]
+
+[node name="spawner3" parent="wall_spawner" index="2"]
+transform = Transform3D(-0.523673, 0, 0.851919, 0, 1, 0, -0.851919, 0, -0.523673, -9.97211, 0, -10.7405)
+
+[node name="spawner4" parent="wall_spawner" index="3"]
+transform = Transform3D(-0.0761619, 0, -0.997096, 0, 1, 0, 0.997096, 0, -0.0761619, -0.393476, 0, -17.092)
+
+[node name="spawner5" parent="wall_spawner" index="4"]
+transform = Transform3D(-0.553028, 0, -0.833163, 0, 1, 0, 0.833163, 0, -0.553028, 16.3379, 0, 10.0367)
+
+[node name="spawner6" parent="wall_spawner" index="5"]
+transform = Transform3D(-0.403626, 0, -0.914924, 0, 1, 0, 0.914924, 0, -0.403626, -5.00998, 0, 8.35575)
+
+[node name="spawner7" parent="wall_spawner" index="6"]
+transform = Transform3D(-0.973944, 0, 0.226787, 0, 1, 0, -0.226787, 0, -0.973944, 8.15584, 0, -4.61474)
+
+[node name="spawner8" parent="wall_spawner" index="7"]
+transform = Transform3D(0.444385, 0, -0.895836, 0, 1, 0, 0.895836, 0, 0.444385, -0.25581, 0, 8.11686)
+
+[node name="spawner1" parent="prop_spawner" index="0"]
+transform = Transform3D(0.654015, 0, -0.756482, 0, 1, 0, 0.756482, 0, 0.654015, 13.0855, 0, -2.00591)
+
+[node name="spawner2" parent="prop_spawner" index="1"]
+transform = Transform3D(0.933668, 0, -0.35814, 0, 1, 0, 0.35814, 0, 0.933668, 2.23111, 0, -20.3079)
+
+[node name="spawner3" parent="prop_spawner" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.20355, 0, -14.5667)
+
+[node name="spawner4" parent="prop_spawner" index="3"]
+transform = Transform3D(0.0455374, 0, -0.998963, 0, 1, 0, 0.998963, 0, 0.0455374, 18.7188, 0, 7.97528)
+
+[node name="spawner5" parent="prop_spawner" index="4"]
+transform = Transform3D(0.98465, 0, 0.174542, 0, 1, 0, -0.174542, 0, 0.98465, -2.78434, 0, 6.43977)

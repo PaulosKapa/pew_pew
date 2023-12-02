@@ -1,38 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://cq7of1yslvtqi"]
+[gd_scene load_steps=2 format=3 uid="uid://cq7of1yslvtqi"]
 
-[ext_resource type="Script" path="res://code/maps.gd" id="1_asuvf"]
-[ext_resource type="PackedScene" uid="uid://ssr7a3wbpq08" path="res://scenes/floor.tscn" id="2_suwe7"]
-[ext_resource type="PackedScene" uid="uid://bsub5pb4oxxe6" path="res://scenes/enemy.tscn" id="3_oa5pm"]
-[ext_resource type="PackedScene" uid="uid://dic3ivxty2onk" path="res://scenes/wall.tscn" id="4_nlhq7"]
-[ext_resource type="PackedScene" uid="uid://0hs7flhblwvn" path="res://scenes/prop.tscn" id="5_w375n"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ucplk"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_adq52"]
-sky_material = SubResource("ProceduralSkyMaterial_ucplk")
-
-[sub_resource type="Environment" id="Environment_mdl27"]
-background_mode = 2
-sky = SubResource("Sky_adq52")
-tonemap_mode = 2
-glow_enabled = true
+[ext_resource type="Script" path="res://code/map1.gd" id="1_bb70h"]
 
 [node name="Test_map" type="Node3D"]
-script = ExtResource("1_asuvf")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_mdl27")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
+script = ExtResource("1_bb70h")
 
 [node name="floor_spawner" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35922, 0)
-
-[node name="floor" parent="floor_spawner" instance=ExtResource("2_suwe7")]
 
 [node name="Enemy" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15482, 0)
@@ -40,87 +14,55 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15482, 0)
 [node name="spawner1" type="Node3D" parent="Enemy"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2361, 0, -0.363878)
 
-[node name="Enemy" parent="Enemy/spawner1" instance=ExtResource("3_oa5pm")]
-
 [node name="spawner2" type="Node3D" parent="Enemy"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20.7259)
 
-[node name="Enemy" parent="Enemy/spawner2" instance=ExtResource("3_oa5pm")]
-
 [node name="Timer" type="Timer" parent="Enemy"]
+wait_time = 10.0
 
 [node name="wall_spawner" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.19439, 0)
 
 [node name="spawner1" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(0.845747, 0, 0.533585, 0, 1, 0, -0.533585, 0, 0.845747, 10.2834, 0.175789, 0.51878)
-
-[node name="wall" parent="wall_spawner/spawner1" instance=ExtResource("4_nlhq7")]
+transform = Transform3D(0.845747, 0, 0.533585, 0, 1, 0, -0.533585, 0, 0.845747, 10.2834, -0.0654513, 0.51878)
 
 [node name="spawner2" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(-0.984109, 0, 0.177566, 0, 1, 0, -0.177566, 0, -0.984109, -5.31423, 0, 4.82024)
 
-[node name="wall" parent="wall_spawner/spawner2" instance=ExtResource("4_nlhq7")]
-
 [node name="spawner3" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(-0.89279, 0, -0.450472, 0, 1, 0, 0.450472, 0, -0.89279, -9.97211, 0, -10.7405)
-
-[node name="wall" parent="wall_spawner/spawner3" instance=ExtResource("4_nlhq7")]
 
 [node name="spawner4" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(-0.460525, 0, -0.887647, 0, 1, 0, 0.887647, 0, -0.460525, 1.08215, 0, -10.6025)
 
-[node name="wall" parent="wall_spawner/spawner4" instance=ExtResource("4_nlhq7")]
-
 [node name="spawner5" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(0.407167, 0, -0.913354, 0, 1, 0, 0.913354, 0, 0.407167, -1.28532, 0, 9.82788)
-
-[node name="wall" parent="wall_spawner/spawner5" instance=ExtResource("4_nlhq7")]
 
 [node name="spawner6" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(-0.378762, 0, -0.925494, 0, 1, 0, 0.925494, 0, -0.378762, -7.41819, 0, -7.2255)
 
-[node name="wall" parent="wall_spawner/spawner6" instance=ExtResource("4_nlhq7")]
-
 [node name="spawner7" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(0.0174876, 0, -0.999847, 0, 1, 0, 0.999847, 0, 0.0174876, 4.11142, 0, -1.7118)
 
-[node name="wall" parent="wall_spawner/spawner7" instance=ExtResource("4_nlhq7")]
-
 [node name="spawner8" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(-0.0630696, 0, -0.998009, 0, 1, 0, 0.998009, 0, -0.0630696, -3.25581, 0, 2.11686)
-
-[node name="wall" parent="wall_spawner/spawner8" instance=ExtResource("4_nlhq7")]
 
 [node name="prop_spawner" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.697706, 0)
 
 [node name="spawner1" type="Node3D" parent="prop_spawner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5733, 0, 0)
-
-[node name="Prop" parent="prop_spawner/spawner1" instance=ExtResource("5_w375n")]
+transform = Transform3D(0.641557, 0, -0.767076, 0, 1, 0, 0.767076, 0, 0.641557, 13.0855, 0, 0)
 
 [node name="spawner2" type="Node3D" parent="prop_spawner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.23111, 0, -12.886)
-
-[node name="Prop" parent="prop_spawner/spawner2" instance=ExtResource("5_w375n")]
+transform = Transform3D(0.697103, 0, -0.716971, 0, 1, 0, 0.716971, 0, 0.697103, 2.23111, 0, -12.886)
 
 [node name="spawner3" type="Node3D" parent="prop_spawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09093, 0, -4.45391)
 
-[node name="Prop" parent="prop_spawner/spawner3" instance=ExtResource("5_w375n")]
-
 [node name="spawner4" type="Node3D" parent="prop_spawner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.44347, 0, -12.1625)
-
-[node name="Prop" parent="prop_spawner/spawner4" instance=ExtResource("5_w375n")]
+transform = Transform3D(0.674998, 0, -0.737819, 0, 1, 0, 0.737819, 0, 0.674998, -4.89877, 0, -11.7696)
 
 [node name="spawner5" type="Node3D" parent="prop_spawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.78434, 0, 6.43977)
-
-[node name="Prop" parent="prop_spawner/spawner5" instance=ExtResource("5_w375n")]
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-3.55702e-08, -0.581214, 0.813751, -2.54057e-08, 0.813751, 0.581214, -1, 0, -4.37114e-08, 36.699, 15.198, 0)
 
 [connection signal="timeout" from="Enemy/Timer" to="." method="_on_timer_timeout"]

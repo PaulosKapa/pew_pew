@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://dth2f08dsr024"]
+
+[ext_resource type="Script" path="res://code/main.gd" id="1_q1ckd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qp8f1"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_vdcbs"]
+sky_material = SubResource("ProceduralSkyMaterial_qp8f1")
+
+[sub_resource type="Environment" id="Environment_retrc"]
+background_mode = 2
+sky = SubResource("Sky_vdcbs")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_noky2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ulmko"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tdns5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d627e"]
+albedo_color = Color(1, 0, 0, 1)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_q1ckd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_retrc")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+
+[node name="play" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3.17)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="play"]
+mesh = SubResource("BoxMesh_noky2")
+surface_material_override/0 = SubResource("StandardMaterial3D_ulmko")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="play"]
+shape = SubResource("BoxShape3D_tdns5")
+
+[node name="exit" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3.17)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="exit"]
+mesh = SubResource("BoxMesh_noky2")
+surface_material_override/0 = SubResource("StandardMaterial3D_d627e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="exit"]
+shape = SubResource("BoxShape3D_tdns5")
+
+[connection signal="input_event" from="play" to="." method="_on_play_input_event"]
+[connection signal="input_event" from="exit" to="." method="_on_exit_input_event"]

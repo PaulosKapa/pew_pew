@@ -12,9 +12,11 @@ size = Vector3(1, 2.005, 1)
 script = ExtResource("1_oicxo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_1rt01")
 
 [node name="Camera3D" type="Camera3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.39621e-08, 0.605522, -0.502868)
 script = ExtResource("1_bbccm")
 
 [node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D/Camera3D"]

@@ -1,13 +1,16 @@
 extends Node
-
+#preload all the resourses
 var test_floor =  preload("res://scenes/floor.tscn")
 var test_wall =  preload("res://scenes/wall.tscn")
 var test_prop = preload("res://scenes/prop.tscn")
 var test_enemy = preload("res://scenes/enemy.tscn")
 var test_map = preload("res://scenes/test_map.tscn")
 var map1 = preload("res://scenes/map1.tscn")
+var map2 = preload("res://scenes/map2.tscn")
+var map3 = preload("res://scenes/map3.tscn")
 var player = preload("res://scenes/player.tscn")
-
+var env1 = preload("res://environments/environment1.tres")
+var env2 = preload("res://environments/environment2.tres")
 # Configure the UDP socket for receiving data from Python
 var python_address : String = "127.0.0.1"
 var python_port : int = 12345

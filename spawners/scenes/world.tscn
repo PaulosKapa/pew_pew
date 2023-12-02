@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://cj42c80pvi1nu"]
+[gd_scene load_steps=3 format=3 uid="uid://cj42c80pvi1nu"]
 
 [ext_resource type="Script" path="res://code/world.gd" id="1_h6nxw"]
+[ext_resource type="Environment" uid="uid://c60hhwd46ke3o" path="res://environments/environment1.tres" id="2_45rag"]
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_h6nxw")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_45rag")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true

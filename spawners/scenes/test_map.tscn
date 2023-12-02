@@ -1,38 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://l24vmjtk2ixm"]
+[gd_scene load_steps=2 format=3 uid="uid://l24vmjtk2ixm"]
 
 [ext_resource type="Script" path="res://code/test_map.gd" id="1_27lue"]
-[ext_resource type="PackedScene" uid="uid://ssr7a3wbpq08" path="res://scenes/floor.tscn" id="2_ts1h3"]
-[ext_resource type="PackedScene" uid="uid://bsub5pb4oxxe6" path="res://scenes/enemy.tscn" id="3_t74vk"]
-[ext_resource type="PackedScene" uid="uid://dic3ivxty2onk" path="res://scenes/wall.tscn" id="4_t8wra"]
-[ext_resource type="PackedScene" uid="uid://0hs7flhblwvn" path="res://scenes/prop.tscn" id="5_ng40l"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ucplk"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_adq52"]
-sky_material = SubResource("ProceduralSkyMaterial_ucplk")
-
-[sub_resource type="Environment" id="Environment_mdl27"]
-background_mode = 2
-sky = SubResource("Sky_adq52")
-tonemap_mode = 2
-glow_enabled = true
 
 [node name="Test_map" type="Node3D"]
 script = ExtResource("1_27lue")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_mdl27")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
-
 [node name="floor_spawner" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35922, 0)
-
-[node name="floor" parent="floor_spawner" instance=ExtResource("2_ts1h3")]
 
 [node name="Enemy" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15482, 0)
@@ -40,14 +14,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15482, 0)
 [node name="spawner1" type="Node3D" parent="Enemy"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.8292)
 
-[node name="Enemy" parent="Enemy/spawner1" instance=ExtResource("3_t74vk")]
-
 [node name="spawner2" type="Node3D" parent="Enemy"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20.7259)
 
-[node name="Enemy" parent="Enemy/spawner2" instance=ExtResource("3_t74vk")]
-
 [node name="Timer" type="Timer" parent="Enemy"]
+wait_time = 10.0
 
 [node name="wall_spawner" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.19439, 0)
@@ -55,67 +26,43 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.19439, 0)
 [node name="spawner1" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(0.506786, 0, -0.862072, 0, 1, 0, 0.862072, 0, 0.506786, 8.96378, 0, -8.75564)
 
-[node name="wall" parent="wall_spawner/spawner1" instance=ExtResource("4_t8wra")]
-
 [node name="spawner2" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(0.311821, 0, 0.950141, 0, 1, 0, -0.950141, 0, 0.311821, 10.9781, 0, 3.74003)
-
-[node name="wall" parent="wall_spawner/spawner2" instance=ExtResource("4_t8wra")]
 
 [node name="spawner3" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(-0.0731859, 0, 0.997318, 0, 1, 0, -0.997318, 0, -0.0731859, -11.4095, 0, 1.6643)
 
-[node name="wall" parent="wall_spawner/spawner3" instance=ExtResource("4_t8wra")]
-
 [node name="spawner4" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(0.430007, 0, -0.902826, 0, 1, 0, 0.902826, 0, 0.430007, 5.18037, 0, 9.14054)
-
-[node name="wall" parent="wall_spawner/spawner4" instance=ExtResource("4_t8wra")]
 
 [node name="spawner5" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(0.667079, 0, -0.744987, 0, 1, 0, 0.744987, 0, 0.667079, -1.28532, 0, 7.60348)
 
-[node name="wall" parent="wall_spawner/spawner5" instance=ExtResource("4_t8wra")]
-
 [node name="spawner6" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(-0.378762, 0, -0.925494, 0, 1, 0, 0.925494, 0, -0.378762, -7.41819, 0, -7.2255)
-
-[node name="wall" parent="wall_spawner/spawner6" instance=ExtResource("4_t8wra")]
 
 [node name="spawner7" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(0.487494, 0, -0.873126, 0, 1, 0, 0.873126, 0, 0.487494, 4.37211, 0, 2.11686)
 
-[node name="wall" parent="wall_spawner/spawner7" instance=ExtResource("4_t8wra")]
-
 [node name="spawner8" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(-0.0630696, 0, -0.998009, 0, 1, 0, 0.998009, 0, -0.0630696, -3.25581, 0, 2.11686)
-
-[node name="wall" parent="wall_spawner/spawner8" instance=ExtResource("4_t8wra")]
 
 [node name="prop_spawner" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.697706, 0)
 
 [node name="spawner1" type="Node3D" parent="prop_spawner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5733, 0, 0)
+transform = Transform3D(0.91046, 0, -0.413597, 0, 1, 0, 0.413597, 0, 0.91046, 14.0707, 0, 0)
 
 [node name="spawner2" type="Node3D" parent="prop_spawner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.72622, 0, -3)
-
-[node name="Prop" parent="prop_spawner/spawner2" instance=ExtResource("5_ng40l")]
+transform = Transform3D(-0.846416, 0, 0.532522, 0, 1, 0, -0.532522, 0, -0.846416, -7.72622, 0, -3)
 
 [node name="spawner3" type="Node3D" parent="prop_spawner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.28123, 0, 4.87572)
-
-[node name="Prop" parent="prop_spawner/spawner3" instance=ExtResource("5_ng40l")]
+transform = Transform3D(0.910503, 0, -0.413502, 0, 1, 0, 0.413502, 0, 0.910503, 5.28123, 0, 4.87572)
 
 [node name="spawner4" type="Node3D" parent="prop_spawner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6738, 0, 4.29353)
-
-[node name="Prop" parent="prop_spawner/spawner4" instance=ExtResource("5_ng40l")]
+transform = Transform3D(-0.837576, 0, -0.546321, 0, 1, 0, 0.546321, 0, -0.837576, 12.7177, 0, -6.51902)
 
 [node name="spawner5" type="Node3D" parent="prop_spawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.78434, 0, 6.43977)
-
-[node name="Prop" parent="prop_spawner/spawner5" instance=ExtResource("5_ng40l")]
 
 [connection signal="timeout" from="Enemy/Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5bagvuy6d61m"]
+
+[ext_resource type="PackedScene" uid="uid://bl2lr1vlc5ep0" path="res://scenes/map2.tscn" id="1_uv15a"]
+[ext_resource type="Script" path="res://code/map3.gd" id="2_wsxv2"]
+
+[node name="Test_map" instance=ExtResource("1_uv15a")]
+script = ExtResource("2_wsxv2")
+
+[node name="spawner2" parent="Enemy" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.165, 0, 0)
+
+[node name="spawner1" parent="wall_spawner" index="0"]
+transform = Transform3D(0.999231, 0, 0.0392247, 0, 1, 0, -0.0392247, 0, 0.999231, 6.2834, -0.0654513, -14.4812)
+
+[node name="spawner2" parent="wall_spawner" index="1"]
+transform = Transform3D(-0.984109, 0, 0.177566, 0, 1, 0, -0.177566, 0, -0.984109, -5.31423, 0, 11.8202)
+
+[node name="spawner3" parent="wall_spawner" index="2"]
+transform = Transform3D(-0.972691, 0, 0.232105, 0, 1, 0, -0.232105, 0, -0.972691, -4.97211, 0, -10.7405)
+
+[node name="spawner4" parent="wall_spawner" index="3"]
+transform = Transform3D(-0.564506, 0, -0.825429, 0, 1, 0, 0.825429, 0, -0.564506, -11.3935, 0, -8.092)
+
+[node name="spawner5" parent="wall_spawner" index="4"]
+transform = Transform3D(0.980185, 0, 0.198085, 0, 1, 0, -0.198085, 0, 0.980185, 6.3379, 0, 14.0367)
+
+[node name="spawner7" parent="wall_spawner" index="6"]
+transform = Transform3D(-0.999454, 0, -0.0330158, 0, 1, 0, 0.0330158, 0, -0.999454, -4.84416, 0, -0.61474)
+
+[node name="spawner8" parent="wall_spawner" index="7"]
+transform = Transform3D(0.998009, 0, -0.0630693, 0, 1, 0, 0.0630693, 0, 0.998009, -0.25581, 0, 2.11686)
+
+[node name="spawner1" parent="prop_spawner" index="0"]
+transform = Transform3D(0.561434, 0, 0.827522, 0, 1, 0, -0.827522, 0, 0.561434, 3.0855, 0, -14.0059)
+
+[node name="spawner2" parent="prop_spawner" index="1"]
+transform = Transform3D(-0.62951, 0, 0.776992, 0, 1, 0, -0.776992, 0, -0.62951, 2.23111, 0, 13.6921)
+
+[node name="spawner3" parent="prop_spawner" index="2"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -9.20355, 0, -11.5667)
+
+[node name="spawner4" parent="prop_spawner" index="3"]
+transform = Transform3D(-0.674174, 0, -0.738573, 0, 1, 0, 0.738573, 0, -0.674174, -9.2812, 0, 9.97528)
+
+[node name="spawner5" parent="prop_spawner" index="4"]
+transform = Transform3D(0.0862515, 0, 0.996274, 0, 1, 0, -0.996274, 0, 0.0862515, -2.78434, 0, 0.43977)
