@@ -98,8 +98,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.697706, 0)
 [node name="spawner1" type="Node3D" parent="prop_spawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5733, 0, 0)
 
-[node name="Prop" parent="prop_spawner/spawner1" instance=ExtResource("5_ng40l")]
-
 [node name="spawner2" type="Node3D" parent="prop_spawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.72622, 0, -3)
 

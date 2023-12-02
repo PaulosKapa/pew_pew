@@ -64,7 +64,11 @@ shape = SubResource("ConvexPolygonShape3D_pcxjx")
 [node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.568677, -0.50975)
 
-[node name="CharacterBody3D2" type="CharacterBody3D" parent="."]
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.568677, 0.50975)
+target_position = Vector3(0, 0, -10)
+
+[node name="CharacterBody3D2" type="CharacterBody3D" parent="." groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.80312, -6.14449)
 script = ExtResource("2_kp61i")
 

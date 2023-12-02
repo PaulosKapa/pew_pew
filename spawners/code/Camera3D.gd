@@ -37,4 +37,12 @@ func process_input():
 	if can_rotate == true and Global.data_list[4].to_int() == 1:
 		rotate_y(Global.data_list[2].to_int() * 0.0005)
 		$RayCast3D.rotate_x(-Global.data_list[1].to_int()* 0.0005)
+		
+	if Global.data_list[5].to_int() == 0:
+		if $Camera3D/RayCast3D.is_colliding():
+	
+			var collider = $Camera3D/RayCast3D.get_collider()
+			print(collider)
+			if collider.is_in_group("enemy"):
+				collider.set_health(collider.get_health() - get_parent().get_dmg())
 

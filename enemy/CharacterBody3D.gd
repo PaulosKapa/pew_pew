@@ -4,7 +4,7 @@ extends CharacterBody3D
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 var health = 100
-
+var dmg = 10
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready():
@@ -17,6 +17,13 @@ func _unhandled_input(event):
 		
 
 func _physics_process(delta):
+	if Input.is_action_just_pressed("pew"):
+		if $Camera3D/RayCast3D.is_colliding():
+	
+			var collider = $Camera3D/RayCast3D.get_collider()
+			print(collider)
+			if collider.is_in_group("enemy"):
+				collider.set_health(collider.get_health() - dmg)
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -37,7 +44,7 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
-	print(get_health())
+	#print(get_health())
 	if(get_health() <= 0):
 		get_tree().reload_current_scene()
 

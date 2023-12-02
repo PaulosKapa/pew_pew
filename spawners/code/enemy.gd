@@ -3,6 +3,7 @@ var speed = 1
 var target
 @export var AP = 10
 @export var fire_rate = 1
+@export var health = 100
 
 func _process(delta):
 	if(target):
@@ -15,7 +16,8 @@ func _process(delta):
 		if(hit!=null):
 			if(hit.is_in_group("player")):
 				target=hit
-		
+	if get_health() == 0:
+		queue_free()
 			
 func _on_area_3d_body_entered(body):
 	if body.is_in_group("player"):
@@ -51,3 +53,7 @@ func shoot():
 					hit.set_health(hit.get_health()-int(AP-(distance/10)))
 				await get_tree().create_timer(fire_rate).timeout
 
+func get_health():
+	return(health)
+func set_health(hp):
+	health = hp
