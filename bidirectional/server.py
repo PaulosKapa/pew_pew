@@ -19,16 +19,18 @@ client_socket, client_address = server_socket.accept()
 print(f"Connection established with {client_address}")
 
 try:
-    while True:
+	while True:
         # Receive data from the client
-        data = client_socket.recv(1024)
-        if not data:
-            break
-        print(f"Received from client: {data.decode('utf-8')}")
+		data = client_socket.recv(1024)
+		if data == null:
+			response = "Hello from server!"
+			print(response)
+			client_socket.send(response.encode('utf-8'))
+		else:
+			print(f"Received from client: {data.decode('utf-8')}")
 
         # Send a response back to the client
-        response = "Hello from server!"
-        client_socket.send(response.encode('utf-8'))
+        
 
 finally:
     # Clean up the connection

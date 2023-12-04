@@ -11,20 +11,21 @@ client_socket.connect(server_address)
 print(f"Connected to {server_address}")
 
 try:
-    while True:
+	while True:
         # Send data to the server
-        message = input("Enter a message to send to the server (or type 'exit' to quit): ")
-        client_socket.send(message.encode('utf-8'))
+        #message = input("Enter a message to send to the server (or type 'exit' to quit): ")
+		#message = ("hello")
+		#client_socket.send(message.encode('utf-8'))
 
-        if message.lower() == 'exit':
-            break
+#        if message.lower() == 'exit':
+ #           break
 
         # Receive the server's response
-        response = client_socket.recv(1024)
-        print(f"Received from server: {response.decode('utf-8')}")
+		response = client_socket.recv(1024)
+		print(f"Received from server: {response.decode('utf-8')}")
 
 finally:
     # Clean up the connection
-    print("Closing the connection.")
-    client_socket.close()
+	print("Closing the connection.")
+	client_socket.close()
 
