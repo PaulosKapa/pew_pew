@@ -25,48 +25,34 @@ struct SensorData {
 const byte address[6] = "00001";
 
 void setup() {
-  Serial.begin(9600); // Initialise Serial communication
-  Wire.begin();         // Initialise I2C communication
-  mpu6050.begin();      // Initialise Gyro communication
-  Serial.println("STRTM"); // Identifier "STARTM" for start mouse
-  mpu6050.calcGyroOffsets(true); // Setting Gyro offsets
-  mpu6050.update(); // Command to calculate the sensor data before using the get command
-  OX = mpu6050.getAngleX(); // Getting angle X Y Z
-  OY = mpu6050.getAngleY();
-  OZ = mpu6050.getAngleZ();
-
-  pinMode(LeftB, INPUT); // Setting Pinmode for all three buttons as INPUT
-  digitalWrite(LeftB, HIGH);
-  pinMode(RightB, INPUT); // Setting Pinmode for all three buttons as INPUT
-  digitalWrite(RightB, HIGH);
-  if (OX < 0) { // Inverting the sign of all the three offset values for zero error correction
-    OX = OX * (-1);
-  } else {
-    OX = (OX - OX) - OX;
-  }
-
-  if (OY < 0) {
-    OY = (OY * (-1));
-  } else {
-    OY = ((OY - OY) - OY) + 10;
-  }
-
-  if (OZ < 0) {
-    OZ = OZ * (-1);
-  } else {
-    OZ = (OZ - OZ) - OZ;
-  }
   radio.begin();
   radio.openWritingPipe(address);
   radio.setPALevel(RF24_PA_MIN);
   radio.stopListening();
+  Serial.begin(9600); // Initialise Serial communication
+  Wire.begin();         // Initialise I2C communication
+  mpu6050.begin();      // Initialise Gyro communication
+  Serial.println("STRTM"); // Identifier "STARTM" for start mouse
+  radio.write(&"STRTM", sizeof("STRTM"));
+  mpu6050.calcGyroOffsets(true); // Setting Gyro offsets
+  //mpu6050.update(); // Command to calculate the sensor data before using the get command
+  OX = mpu6050.getAngleX(); // Getting angle X Y Z
+  OY = mpu6050.getAngleY();
+  OZ = mpu6050.getAngleZ();
+  Serial.println(String(OX) + ',' + String(OY) + ',' + String(OZ));
+  pinMode(LeftB, INPUT); // Setting Pinmode for all three buttons as INPUT
+  digitalWrite(LeftB, HIGH);
+  pinMode(RightB, INPUT); // Setting Pinmode for all three buttons as INPUT
+  digitalWrite(RightB, HIGH);
+  
+
 }
 
 void loop() {
   mpu6050.update();
-  X = OX + mpu6050.getAngleX(); // Getting current angle for X Y Z and correcting the zero error
-  Y = OY + mpu6050.getAngleY();
-  Z = OZ + mpu6050.getAngleZ();
+  X = mpu6050.getAngleX() - (OX); // Getting angle X Y Z
+  Y = mpu6050.getAngleY() - (OY);
+  Z = mpu6050.getAngleZ() - (OZ);
   mouse_input = digitalRead(LeftB);
   teleporter = digitalRead(RightB);
 

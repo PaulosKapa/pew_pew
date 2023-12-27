@@ -28,7 +28,7 @@ func _process(delta):
 		# Receive data from Python
 		#var data : PacketPeerUDP = python_socket.get_packet()
 		var data = python_socket.get_packet()
-		print(data)
+	
 		# Process the received data as needed
 		var decoded_data : String = data.get_string_from_utf8()
 		
