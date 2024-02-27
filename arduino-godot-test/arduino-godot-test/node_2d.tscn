@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnhr06q07fiky"]
+
+[ext_resource type="Script" path="res://ArduinoTest.cs" id="1_g3kg8"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_g3kg8")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_right = 650.0
+offset_bottom = 275.0
+size_flags_horizontal = 6
+text = "sdad"

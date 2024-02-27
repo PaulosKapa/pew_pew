@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 Global="*res://code/Global.gd"
 
+[dotnet]
+
+project/assembly_name="spawners"
+
 [input]
 
 click={

@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name enemy
 var speed = 1
 var target
 @export var AP = 10

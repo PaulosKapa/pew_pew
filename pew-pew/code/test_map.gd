@@ -7,7 +7,7 @@ var enemies_spawned = 0
 var floors = [Global.test_floor]
 var walls = [Global.test_wall]
 var props = [Global.test_prop]
-var enemies = [Global.test_enemy]
+var enemies = [Global.test_enemy, Global.enemy_drone001]
 var player = Global.player
 
 func _ready():
