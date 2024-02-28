@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 public partial class ArduinoTest : Node2D
 {
@@ -14,12 +15,23 @@ public partial class ArduinoTest : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GD.Print(System.Runtime.InteropServices.RuntimeInformation.OSDescription);
-        string[] ports = SerialPort.GetPortNames();
 
-        text = GetNode<RichTextLabel>("RichTextLabel");
+		string[] ports = SerialPort.GetPortNames();
+		
+		foreach (string port in ports){
+			GD.Print(port);
+		}
+
+		text = GetNode<RichTextLabel>("RichTextLabel");
 		serialPort = new SerialPort();
-		serialPort.PortName = ports[0];
+		//bad solution, it won't work if there is any other serial comm device connected to the computer
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+		{
+			serialPort.PortName = ports[1];
+		}	
+		else if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows)){
+			serialPort.PortName = ports[0];
+		}
 		serialPort.BaudRate = 9600; //make sure this is the same in Arduino as it is in Godot.
 		
 		serialPort.Open();
@@ -34,7 +46,7 @@ public partial class ArduinoTest : Node2D
 		string serialMessage = serialPort.ReadLine();
 		if(serialMessage!=""){
 	serialMessage = Regex.Replace(serialMessage, @"[\r\n,]", "");
-			serialMessage = Regex.Replace(serialMessage, @",", "");
+//			serialMessage = Regex.Replace(serialMessage, @",", "");
 			GD.Print(serialMessage);
 			char[] serialArray = serialMessage.ToCharArray();
 			//GD.Print(serialArray[1]);
