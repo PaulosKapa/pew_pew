@@ -35,4 +35,7 @@ void loop() {
     // Use the received data as needed
     Serial.println(String(sensorData.X) + ',' + String(sensorData.Y) + ',' + String(sensorData.Z) + ',' + String(sensorData.mouse_input)+','+String(sensorData.teleporter));
   }
+  else{
+    Serial.println("h");
+  }
 }

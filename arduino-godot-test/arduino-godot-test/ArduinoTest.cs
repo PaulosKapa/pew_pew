@@ -14,9 +14,12 @@ public partial class ArduinoTest : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		text = GetNode<RichTextLabel>("RichTextLabel");
+		GD.Print(System.Runtime.InteropServices.RuntimeInformation.OSDescription);
+        string[] ports = SerialPort.GetPortNames();
+
+        text = GetNode<RichTextLabel>("RichTextLabel");
 		serialPort = new SerialPort();
-		serialPort.PortName = "/dev/ttyUSB0";
+		serialPort.PortName = ports[0];
 		serialPort.BaudRate = 9600; //make sure this is the same in Arduino as it is in Godot.
 		
 		serialPort.Open();
@@ -30,18 +33,21 @@ public partial class ArduinoTest : Node2D
 	
 		string serialMessage = serialPort.ReadLine();
 		if(serialMessage!=""){
-	serialMessage = Regex.Replace(serialMessage, @"\r\n?|\n", "");
-		GD.Print(serialMessage);
-		//GD.Print(serialMessage.Length);
-		//foreach (char letter in serialMessage)
-		//{
+	serialMessage = Regex.Replace(serialMessage, @"[\r\n,]", "");
+			serialMessage = Regex.Replace(serialMessage, @",", "");
+			GD.Print(serialMessage);
+			char[] serialArray = serialMessage.ToCharArray();
+			//GD.Print(serialArray[1]);
+			//GD.Print(serialMessage.Length);
+			//foreach (char letter in serialMessage)
+			//{
 			////// Print each letter
 			//GD.Print(letter);
 			//}
-		GD.Print(serialMessage == "1");
-		//GD.Print("1".Length);
-		//foreach (char letter in "1")
-		//{
+			//GD.Print(serialMessage == "1");
+			//GD.Print("1".Length);
+			//foreach (char letter in "1")
+			//{
 			////// Print each letter
 			//GD.Print(letter);
 			//}
