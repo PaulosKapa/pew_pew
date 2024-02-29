@@ -47,10 +47,8 @@ points = PackedVector3Array(-24.3798, 2.30332, -3.8375, -24.2152, -1.44131, -3.5
 transform = Transform3D(0.21, 0, 0, 0, 1.44, 0, 0, 0, 0.1, 0, 0, 0)
 
 [node name="Plank down_005" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_a1yo4")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_4ruij")
