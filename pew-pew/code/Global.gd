@@ -1,20 +1,35 @@
 extends Node
 #preload all the resourses
+#floors
 var test_floor =  preload("res://scenes/floor.tscn")
+#walls
 var test_wall =  preload("res://scenes/wall.tscn")
+var table = preload("res://scenes/wall.tscn")
+var vending_machine = preload("res://scenes/vending machine.tscn")
+var tree1 = preload("res://scenes/tree.tscn")
+#props
 var test_prop = preload("res://scenes/prop.tscn")
+var barel_prop = preload("res://scenes/barel.tscn")
+var bench_prop = preload("res://scenes/bench.tscn")
+var metal_barel_prop = preload("res://scenes/metal_barel.tscn")
+var fench_prop = preload("res://scenes/fench.tscn")
+#enemies
 var test_enemy = preload("res://scenes/enemy.tscn")
 var enemy_drone001 = preload("res://scenes/drone_ground.tscn")
+var enemy_drone002 = preload("res://scenes/drone_patrol.tscn")
+var enemy_drone003 = preload("res://scenes/drone_sky.tscn")
+var enemy_drone004 = preload("res://scenes/drone_wheels.tscn")
+#maps
 var test_map = preload("res://scenes/test_map.tscn")
 var map1 = preload("res://scenes/map1.tscn")
 var map2 = preload("res://scenes/map2.tscn")
 var map3 = preload("res://scenes/map3.tscn")
 var player = preload("res://scenes/player.tscn")
 var env1 = preload("res://environments/environment1.tres")
-var env2 = preload("res://environments/environment2.tres")
 # Configure the UDP socket for receiving data from Python
 var python_address : String = "127.0.0.1"
 var python_port : int = 12345
+var env2 = preload("res://environments/environment2.tres")
 var python_socket := PacketPeerUDP.new()
 var data_list
 var begin = false
