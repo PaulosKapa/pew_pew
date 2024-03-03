@@ -73,10 +73,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7fbke")
 
-[node name="metal barel" type="Node3D" groups=["prop"]]
+[node name="metal barel" type="Node3D"]
 transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, 0.718622, 0, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["prop"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1.35, 0, 0, 0, 1, -4.46122e-05, 1.43589, -0.0057849)

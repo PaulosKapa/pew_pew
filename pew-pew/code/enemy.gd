@@ -1,6 +1,6 @@
 extends CharacterBody3D
 class_name enemy
-var speed = 1
+@export var speed = 10
 var target
 var target_name
 @export var AP = 10
@@ -15,6 +15,7 @@ var state = IDLE
 
 
 func _process(delta):
+	
 	match state:
 		
 		HUNT:
@@ -31,16 +32,19 @@ func _process(delta):
 				if(hit.is_in_group("player")):
 					target=hit
 					state = HUNT
+				elif(hit.is_in_group("wall")):
+					target = hit
+					state = ALERT
 		#if there is not a target, but there is a prop, go to the prop
 		ALERT:
 			look_at(target.global_transform.origin, Vector3.UP)
 			move_to_target(delta)
+		#	print(sqrt((target.global_position.x-global_position.x)**2.0+(target.global_position.z-global_position.z)**2.0))
 			if(sqrt((target.global_position.x-global_position.x)**2.0+(target.global_position.z-global_position.z)**2.0)<2):
+				print('done')
 				state = IDLE
 				target = null
-			
-			
-				
+
 	#set the enemy spawner logic and delete the enemy
 	if get_health() == 0:
 		get_parent().get_parent().get_parent().set_enemy_player(get_parent().get_parent().get_parent().get_enemy_player() - 1)
@@ -48,14 +52,21 @@ func _process(delta):
 
 #when the player gets in the collision shape of the enemy
 func _on_area_3d_body_entered(body):
-	
+
+	#if they find the player
 	if body.is_in_group("player"):
 		target = body
 		state = HUNT
-
-	elif body.is_in_group("prop"):
+		
+	#else scout the map from prop to prop
+	elif body.is_in_group("prop") and state == IDLE:
 		target = body
 		state = ALERT
+		
+		
+	#elif body.is_in_group("wall") and state == IDLE:
+	#	target = body
+	#	state = ALERT
 
 #when they leave
 func _on_area_3d_body_exited(body):

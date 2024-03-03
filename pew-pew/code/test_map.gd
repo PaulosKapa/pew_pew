@@ -72,7 +72,7 @@ func _on_timer_timeout():
 		enemy.set_position($Enemy/spawner1.global_position)
 		add_child(enemy)
 		var enemy1 = enemies.pick_random().instantiate()
-		enemy1.set_position($Enemy/spawner1.global_position)
+		enemy1.set_position($Enemy/spawner2.global_position)
 		add_child(enemy1)
 		set_enemy_player(get_enemy_player()+2)
 	$Enemy/Timer.stop()

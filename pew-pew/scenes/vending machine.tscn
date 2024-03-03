@@ -363,7 +363,7 @@ points = PackedVector3Array(-1, -1, -1.03764, -1, 0.999787, -1.03764, 1, -1, -1.
 [node name="vending machine" type="Node3D"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["wall"]]
 
 [node name="Cube" type="MeshInstance3D" parent="StaticBody3D"]
 transform = Transform3D(2.5, 0, 0, 0, 6, 0, 0, 0, 3.5, 0, 6.03584, 0)
