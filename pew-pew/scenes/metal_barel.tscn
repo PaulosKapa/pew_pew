@@ -73,7 +73,8 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7fbke")
 
-[node name="metal barel" type="Node3D"]
+[node name="metal barel" type="Node3D" groups=["prop"]]
+transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, 0.718622, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
@@ -85,3 +86,6 @@ shape = SubResource("ConvexPolygonShape3D_us0hs")
 transform = Transform3D(1, 0, 0, 0, 1.35, 0, 0, 0, 1, -4.46122e-05, 1.43589, -0.0057849)
 mesh = SubResource("ArrayMesh_k6lah")
 skeleton = NodePath("")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.87024e-08, 1.34296, -1.5)

@@ -17,4 +17,4 @@ mesh = SubResource("BoxMesh_lb7rd")
 skeleton = NodePath("../Node3D")
 
 [node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0038216, -1.49795)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)

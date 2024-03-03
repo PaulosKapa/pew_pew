@@ -1,9 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://l24vmjtk2ixm"]
+[gd_scene load_steps=5 format=3 uid="uid://l24vmjtk2ixm"]
 
 [ext_resource type="Script" path="res://code/test_map.gd" id="1_27lue"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xcoir"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_kqigh"]
+sky_material = SubResource("ProceduralSkyMaterial_xcoir")
+
+[sub_resource type="Environment" id="Environment_okeoq"]
+background_mode = 2
+sky = SubResource("Sky_kqigh")
+tonemap_mode = 2
+glow_enabled = true
+
 [node name="Test_map" type="Node3D"]
 script = ExtResource("1_27lue")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_okeoq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
 
 [node name="floor_spawner" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35922, 0)
@@ -64,5 +84,8 @@ transform = Transform3D(-0.837576, 0, -0.546321, 0, 1, 0, 0.546321, 0, -0.837576
 
 [node name="spawner5" type="Node3D" parent="prop_spawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.78434, 0, 6.43977)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 32.1658, 0)
 
 [connection signal="timeout" from="Enemy/Timer" to="." method="_on_timer_timeout"]

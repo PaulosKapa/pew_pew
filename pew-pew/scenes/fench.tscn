@@ -41,7 +41,8 @@ shadow_mesh = SubResource("ArrayMesh_cj2hg")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4ruij"]
 points = PackedVector3Array(-24.3798, 2.30332, -3.8375, -24.2152, -1.44131, -3.5002, -24.3992, 2.23429, -3.8043, -24.3798, 2.30332, 3.83724, -24.2249, 2.56073, -3.51756, 25.0671, 2.30332, -3.8375, -24.2152, -1.44131, 3.49994, 24.9025, -1.44131, -3.5002, -24.3992, 2.23429, 3.87119, -24.2249, 2.56073, 3.51654, 25.0671, 2.30332, 3.83724, -22.6754, 2.8069, -0.0940745, 24.9122, 2.56073, -3.51756, 24.9025, -1.44131, 3.49994, 25.0429, 2.23429, 3.87119, -22.6657, 2.8069, -0.0163538, 24.9122, 2.56073, 3.51654, 23.111, 2.8069, -0.0940745, 23.2611, 2.8069, -0.0789831, 23.1255, 2.8069, -0.0163538, 23.2514, 2.8069, -0.0238996)
 
-[node name="fench" type="Node3D"]
+[node name="fench" type="Node3D" groups=["prop"]]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(0.21, 0, 0, 0, 1.44, 0, 0, 0, 0.1, 0, 0, 0)
@@ -51,4 +52,8 @@ mesh = SubResource("ArrayMesh_a1yo4")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_4ruij")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
