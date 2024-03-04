@@ -256,7 +256,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_mj3jf")
 
-[node name="Drone002" type="CharacterBody3D"]
+[node name="Drone002" type="CharacterBody3D" groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 script = ExtResource("1_gt76q")
 

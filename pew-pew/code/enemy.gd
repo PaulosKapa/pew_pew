@@ -3,19 +3,27 @@ class_name enemy
 @export var speed = 10
 var target
 var target_name
+var previous_hit = null
+var nearby_enemies = []
 @export var AP = 10
 @export var fire_rate = 1
 @export var health = 100
 @onready var ray = $RayCast3D
+
 enum{IDLE,
 	ALERT,
-	HUNT
+	HUNT,
+	FOLLOW
 }
 var state = IDLE
 
 
-func _process(delta):
-	
+func _physics_process(delta):
+	#try to not collide enemies
+	for enemy in nearby_enemies:
+		print(global_position>enemy.global_position+Vector3(1,0,1) or global_position>enemy.global_position+Vector3(-1,0,-1))
+		if(global_position==enemy.global_position+Vector3(1,0,1)):
+			global_position = global_position - Vector3(1,0,1)
 	match state:
 		
 		HUNT:
@@ -33,17 +41,32 @@ func _process(delta):
 					target=hit
 					state = HUNT
 				elif(hit.is_in_group("wall")):
-					target = hit
-					state = ALERT
+					#if the ray still hits the same wall
+					if(previous_hit == "wall"):
+						target = null
+						state = IDLE
+					else:
+						target = hit
+						state = ALERT
+			else:
+				#when the ray stops hitting the wall, release
+				previous_hit = null
 		#if there is not a target, but there is a prop, go to the prop
 		ALERT:
-			look_at(target.global_transform.origin, Vector3.UP)
+			for enemy in nearby_enemies:
+				follow(enemy)
+			#look_at(target.global_transform.origin, Vector3.UP)
 			move_to_target(delta)
-		#	print(sqrt((target.global_position.x-global_position.x)**2.0+(target.global_position.z-global_position.z)**2.0))
-			if(sqrt((target.global_position.x-global_position.x)**2.0+(target.global_position.z-global_position.z)**2.0)<2):
-				print('done')
+			var origin = ray.global_transform.origin
+			var collision_point = ray.get_collision_point()
+			
+		
+			if(sqrt((target.global_position.x-global_position.x)**2.0+(target.global_position.z-global_position.z)**2.0)<5):
+				#print('done')
 				state = IDLE
 				target = null
+				#use this to get the previouse hit of the enemy, so as not to get in a constant lock at the enemy
+				previous_hit = "wall"
 
 	#set the enemy spawner logic and delete the enemy
 	if get_health() == 0:
@@ -52,26 +75,22 @@ func _process(delta):
 
 #when the player gets in the collision shape of the enemy
 func _on_area_3d_body_entered(body):
-
-	#if they find the player
-	if body.is_in_group("player"):
-		target = body
-		state = HUNT
+	#follow the leader
+	if body.is_in_group("enemy") and body!=$".":
+		nearby_enemies.append(body)
 		
 	#else scout the map from prop to prop
 	elif body.is_in_group("prop") and state == IDLE:
 		target = body
 		state = ALERT
 		
-		
-	#elif body.is_in_group("wall") and state == IDLE:
-	#	target = body
-	#	state = ALERT
 
 #when they leave
 func _on_area_3d_body_exited(body):
 	if body.is_in_group("Player"):
 		target = null
+	elif body.is_in_group("enemy"):
+		nearby_enemies.erase(body)
 
 #move to the global position of the player
 func move_to_target(delta):
@@ -105,4 +124,7 @@ func get_health():
 	return(health)
 func set_health(hp):
 	health = hp
-
+#follow the leader enemy
+func follow(enemy):
+	enemy.target = target
+	enemy.state = state

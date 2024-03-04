@@ -360,16 +360,14 @@ shadow_mesh = SubResource("ArrayMesh_ipaae")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_85632"]
 points = PackedVector3Array(-1, -1, -1.03764, -1, 0.999787, -1.03764, 1, -1, -1.03764, -1, -1, 1.03138, 0.791112, 1.01856, -1.03764, -1, 0.999787, 1.03138, 1, -0.902392, -1.03764, 1, -1, 1.03138, 0.888215, 1.01856, -1.03764, 0.791112, 1.01856, 1.02875, 0.791112, 0.999985, 1.03138, 0.999804, -0.870975, -1.03764, 1, 0.999787, -1.00018, 1, -0.902392, 1.03138, 0.888215, 1.01856, 1.02875, 1, 1.00078, 0.338535, 0.888215, 0.999985, 1.03138, 1, 0.999787, 0.999789, 0.999804, -0.870975, 1.03138)
 
-[node name="vending machine" type="Node3D"]
+[node name="StaticBody3D" type="StaticBody3D" groups=["wall"]]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["wall"]]
-
-[node name="Cube" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="Cube" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.5, 0, 0, 0, 6, 0, 0, 0, 3.5, 0, 6.03584, 0)
 mesh = SubResource("ArrayMesh_edyef")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(2.5, 0, 0, 0, 6, 0, 0, 0, 3.5, 0, 6.03584, 0)
 shape = SubResource("ConvexPolygonShape3D_85632")

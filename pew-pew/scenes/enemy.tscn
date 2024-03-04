@@ -10,7 +10,7 @@ data = PackedVector3Array(0, 1, 0, 0, 1, 0, 0, 0.9924, -0.0868, 0, 1, 0, -0.0085
 [sub_resource type="SphereShape3D" id="SphereShape3D_ivpk4"]
 radius = 10.0
 
-[node name="Enemy" type="CharacterBody3D"]
+[node name="Enemy" type="CharacterBody3D" groups=["enemy"]]
 script = ExtResource("1_i5op2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

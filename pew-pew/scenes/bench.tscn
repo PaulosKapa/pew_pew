@@ -41,20 +41,17 @@ shadow_mesh = SubResource("ArrayMesh_vwu4f")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ji4qc"]
 points = PackedVector3Array(-5.41528, 2.08709, 1.1213, -5.41528, 2.08709, -1.0444, -7.4145, 2.08709, 1.1213, 9.02411, -2.41626, 1.10625, 10.6919, 0.766413, 1.10625, 10.0999, 1.11245, 1.10625, -7.4145, 2.08709, -1.0444, 10.0999, 1.11245, -1.03126, 10.6919, 0.766413, -1.03126, 9.02411, -2.41626, -1.02892, -4.79141, -2.41626, 1.10625, 7.02489, -2.41626, -1.02892, -4.79141, -2.41626, -1.02723)
 
-[node name="bench" type="Node3D"]
-transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, -0.233147, 0)
+[node name="StaticBody3D" type="StaticBody3D" groups=["prop"]]
+transform = Transform3D(-3.93403e-08, 0, 0.9, 0, 0.9, 0, -0.9, 0, -3.93403e-08, 0, 0, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["prop"]]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-
-[node name="Cube_011" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="Cube_011" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.05, 0, 0, 0, 0.24, 0, 0, 0, 1.31, -0.401599, 0.579802, -0.0516161)
 mesh = SubResource("ArrayMesh_s6m1h")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.05, 0, 0, 0, 0.24, 0, 0, 0, 1.31, -0.401599, 0.579802, -0.0516161)
 shape = SubResource("ConvexPolygonShape3D_ji4qc")
 
 [node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, -0.233147, -1.35)

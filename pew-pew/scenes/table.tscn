@@ -153,16 +153,14 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_che8k")
 
-[node name="table" type="Node3D"]
+[node name="StaticBody3D" type="StaticBody3D" groups=["wall"]]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["wall"]]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, -4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0.0023427, 1.78487, 0.0038712)
 shape = SubResource("ConvexPolygonShape3D_hfouu")
 
-[node name="leg 1_003" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="leg 1_003" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, -4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0.0023427, 1.78487, 0.0038712)
 mesh = SubResource("ArrayMesh_r4cb2")
 skeleton = NodePath("")
