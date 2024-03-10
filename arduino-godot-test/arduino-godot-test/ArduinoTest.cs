@@ -47,14 +47,14 @@ public partial class ArduinoTest : Node2D
 		if(serialMessage!=""){
 	serialMessage = Regex.Replace(serialMessage, @"[\r\n,]", "");
 //			serialMessage = Regex.Replace(serialMessage, @",", "");
-			GD.Print(serialMessage);
+		//	GD.Print(serialMessage);
 			char[] serialArray = serialMessage.ToCharArray();
 			//GD.Print(serialArray[1]);
-			//GD.Print(serialMessage.Length);
+			GD.Print(serialMessage.Length);
 			//foreach (char letter in serialMessage)
 			//{
-			////// Print each letter
-			//GD.Print(letter);
+			///// Print each letter
+		//	GD.Print(letter);
 			//}
 			//GD.Print(serialMessage == "1");
 			//GD.Print("1".Length);
