@@ -4,7 +4,6 @@ class_name enemy
 var target
 var target_name
 var previous_hit = null
-var nearby_enemies = []
 @export var AP = 10
 @export var fire_rate = 1
 @export var health = 100
@@ -12,18 +11,12 @@ var nearby_enemies = []
 
 enum{IDLE,
 	ALERT,
-	HUNT,
-	FOLLOW
+	HUNT
 }
 var state = IDLE
 
 
 func _physics_process(delta):
-	#try to not collide enemies
-	for enemy in nearby_enemies:
-		print(global_position>enemy.global_position+Vector3(1,0,1) or global_position>enemy.global_position+Vector3(-1,0,-1))
-		if(global_position==enemy.global_position+Vector3(1,0,1)):
-			global_position = global_position - Vector3(1,0,1)
 	match state:
 		
 		HUNT:
@@ -53,9 +46,7 @@ func _physics_process(delta):
 				previous_hit = null
 		#if there is not a target, but there is a prop, go to the prop
 		ALERT:
-			for enemy in nearby_enemies:
-				follow(enemy)
-			#look_at(target.global_transform.origin, Vector3.UP)
+			look_at(target.global_transform.origin, Vector3.UP)
 			move_to_target(delta)
 			var origin = ray.global_transform.origin
 			var collision_point = ray.get_collision_point()
@@ -75,12 +66,8 @@ func _physics_process(delta):
 
 #when the player gets in the collision shape of the enemy
 func _on_area_3d_body_entered(body):
-	#follow the leader
-	if body.is_in_group("enemy") and body!=$".":
-		nearby_enemies.append(body)
-		
 	#else scout the map from prop to prop
-	elif body.is_in_group("prop") and state == IDLE:
+	if body.is_in_group("prop") and state == IDLE:
 		target = body
 		state = ALERT
 		
@@ -89,8 +76,7 @@ func _on_area_3d_body_entered(body):
 func _on_area_3d_body_exited(body):
 	if body.is_in_group("Player"):
 		target = null
-	elif body.is_in_group("enemy"):
-		nearby_enemies.erase(body)
+
 
 #move to the global position of the player
 func move_to_target(delta):
@@ -124,7 +110,3 @@ func get_health():
 	return(health)
 func set_health(hp):
 	health = hp
-#follow the leader enemy
-func follow(enemy):
-	enemy.target = target
-	enemy.state = state

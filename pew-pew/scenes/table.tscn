@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://blmx07718p2bq"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hfouu"]
-points = PackedVector3Array(19.8316, 0.146373, 29.7496, 19.2679, 0.173656, 28.8982, -19.8823, 0.146373, 29.7496, 19.8316, 0.0214989, 29.7496, 19.8316, 0.146373, -29.827, -19.3186, 0.173656, 28.8982, 19.2679, 0.173656, -28.9814, -19.8823, 0.0214989, 29.7496, -19.8823, 0.146373, -29.827, 17.7905, -1.97019, 27.2595, 19.8316, 0.0214989, -29.827, -19.3186, 0.173656, -28.9814, -17.5613, -1.97019, 27.2595, -19.8823, 0.0214989, -29.827, 17.7905, -1.97019, 25.2592, 17.7711, -1.96662, -27.2377, -17.5613, -1.97019, 25.2592, 15.7689, -1.96662, -27.2377, -17.5613, -1.96452, -27.2319)
+[sub_resource type="BoxShape3D" id="BoxShape3D_qxpg4"]
+size = Vector3(39.7385, 0.164795, 59.7608)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hd5ya"]
 resource_name = "Material.003"
@@ -157,8 +157,8 @@ shadow_mesh = SubResource("ArrayMesh_che8k")
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, -4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0.0023427, 1.78487, 0.0038712)
-shape = SubResource("ConvexPolygonShape3D_hfouu")
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-08, -0.1, 0, 1, -4.37114e-09, -0.00091652, 1.79198, 0.0848038)
+shape = SubResource("BoxShape3D_qxpg4")
 
 [node name="leg 1_003" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, -4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0.0023427, 1.78487, 0.0038712)

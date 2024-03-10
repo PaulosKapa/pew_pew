@@ -62,19 +62,19 @@ shape = SubResource("CapsuleShape3D_gu567")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.636686, -0.548478)
 
 [node name="fench" parent="." instance=ExtResource("3_n0csx")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.916501, 4.04493)
+transform = Transform3D(0.2, 0, 0, 0, 1.371, 0, 0, 0, 0.095, 0, 0.820115, 3.51136)
 
 [node name="bench" parent="." instance=ExtResource("2_5h0w3")]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 3.43441, 0.513651, 3.61156)
 
 [node name="tree" parent="." instance=ExtResource("4_vwt4u")]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -2.20694, 0, 4.33616)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -2.20694, 0.588833, 4.33616)
 
 [node name="table" parent="." instance=ExtResource("5_bduuu")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -4.71532, 0.949989, 3.95676)
 
 [node name="barel" parent="." instance=ExtResource("6_hgbhr")]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 6.74539, 1.01872, 3.6098)
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 6.74539, 0.368463, 3.6098)
 
 [node name="Drone002" parent="." instance=ExtResource("7_cwoqi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0365, 1.7, 3.66839)

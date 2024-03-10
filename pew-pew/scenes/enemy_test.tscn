@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://d1dc1pp67vfqv"]
+[gd_scene load_steps=9 format=3 uid="uid://d1dc1pp67vfqv"]
 
 [ext_resource type="PackedScene" uid="uid://bsub5pb4oxxe6" path="res://scenes/enemy.tscn" id="1_yio73"]
 [ext_resource type="PackedScene" uid="uid://dic3ivxty2onk" path="res://scenes/wall.tscn" id="2_njn28"]
-[ext_resource type="PackedScene" uid="uid://bpr0n7cf77s80" path="res://scenes/vending machine.tscn" id="3_7fecu"]
 [ext_resource type="PackedScene" uid="uid://csi6gixt82xg8" path="res://scenes/drone_sky.tscn" id="4_jsyxk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g0dxg"]
@@ -42,16 +41,22 @@ mesh = SubResource("BoxMesh_syhvp")
 shape = SubResource("BoxShape3D_cm4o1")
 
 [node name="Enemy" parent="." instance=ExtResource("1_yio73")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.47364, -1.2081)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2418, 1.47364, -16.4422)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.33306, 15.4244)
 
 [node name="wall" parent="." instance=ExtResource("2_njn28")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4986, 1.51845, -2.67912)
+transform = Transform3D(0.808771, 0, -0.588124, 0, 1, 0, 0.588124, 0, 0.808771, 1.50894, 1.51845, -2.67912)
 
-[node name="StaticBody3D" parent="." instance=ExtResource("3_7fecu")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -17.905, 0, 0)
+[node name="wall3" parent="." instance=ExtResource("2_njn28")]
+transform = Transform3D(0.274966, 0, 0.961454, 0, 1, 0, -0.961454, 0, 0.274966, 1.50894, 1.51845, -13.4084)
+
+[node name="wall4" parent="." instance=ExtResource("2_njn28")]
+transform = Transform3D(-0.948119, 0, 0.317917, 0, 1, 0, -0.317917, 0, -0.948119, -6.37117, 1.51845, -13.4084)
+
+[node name="wall2" parent="." instance=ExtResource("2_njn28")]
+transform = Transform3D(0.498533, 0, -0.866871, 0, 1, 0, 0.866871, 0, 0.498533, -6.51806, 1.51845, -2.67912)
 
 [node name="Drone002" parent="." instance=ExtResource("4_jsyxk")]
-transform = Transform3D(-0.358221, 0, 0.933637, 0, 1, 0, -0.933637, 0, -0.358221, 3.65757, 1.7, 0)
+transform = Transform3D(-0.358221, 0, 0.933637, 0, 1, 0, -0.933637, 0, -0.358221, 3.65757, 1.7, 12.8144)

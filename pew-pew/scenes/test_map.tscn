@@ -86,6 +86,6 @@ transform = Transform3D(-0.837576, 0, -0.546321, 0, 1, 0, 0.546321, 0, -0.837576
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.78434, 0, 6.43977)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 32.1658, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.15788, 26.5925)
 
 [connection signal="timeout" from="Enemy/Timer" to="." method="_on_timer_timeout"]
