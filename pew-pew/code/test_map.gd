@@ -39,9 +39,9 @@ func _ready():
 	var player_spawners = [$prop_spawner/spawner1.get_children(), $prop_spawner/spawner2.get_children(), $prop_spawner/spawner3.get_children(), $prop_spawner/spawner4.get_children(), $prop_spawner/spawner5.get_children()]	
 	var child_spawner = player_spawners.pick_random()[0].get_children()
 	var pl = (player.instantiate())
-	#pl.set_position(child_spawner[2].global_position)
-	#pl.set_rotation(child_spawner[2].global_rotation)
-	#add_child(pl)
+	pl.set_position(child_spawner[2].global_position)
+	pl.set_rotation(child_spawner[2].global_rotation)
+	add_child(pl)
 	#start the timer for the enemy spawner logic
 	$Enemy/Timer.start()
 

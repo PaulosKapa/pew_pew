@@ -33,6 +33,7 @@ var env2 = preload("res://environments/environment2.tres")
 var python_socket := PacketPeerUDP.new()
 var data_list
 var begin = false
+var mouse = true
 
 func _ready():
 	# Bind the socket to the specified address and port
@@ -51,3 +52,8 @@ func _process(delta):
 		data_list = decoded_data.split(",")
 		#print(data_list)
 		begin = true
+#setters and getters for if the player uses mouse and keyboard or not. Probably only for debugging
+func set_mouse(m):
+	mouse = m
+func get_mouse():
+	return mouse
