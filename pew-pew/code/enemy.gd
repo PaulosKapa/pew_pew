@@ -20,7 +20,7 @@ var state = IDLE
 
 func _physics_process(delta):
 	#try to not collide enemies
-	print(nearby_enemies)
+	
 	for enemy in nearby_enemies:
 		#print(global_position>enemy.global_position+Vector3(1,0,1) or global_position>enemy.global_position+Vector3(-1,0,-1))
 		if(global_position==enemy.global_position+Vector3(1,0,1)):
@@ -98,8 +98,11 @@ func _on_area_3d_body_exited(body):
 
 #move to the global position of the player
 func move_to_target(delta):
-	
-	var direction = (target.get_parent().transform.origin - transform.origin).normalized()
+	var direction
+	if(target.get_parent() != null):
+		direction = (target.get_parent().transform.origin - transform.origin).normalized()
+	else:
+		direction = (target.transform.origin - transform.origin).normalized()
 	velocity = direction * speed
 	
 	move_and_slide()
