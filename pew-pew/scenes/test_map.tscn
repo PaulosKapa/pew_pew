@@ -26,10 +26,10 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 shadow_enabled = true
 
 [node name="floor_spawner" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35922, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="Enemy" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15482, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="spawner1" type="Node3D" parent="Enemy"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.8292)
@@ -41,7 +41,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20.7259)
 wait_time = 10.0
 
 [node name="wall_spawner" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.19439, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="spawner1" type="Node3D" parent="wall_spawner"]
 transform = Transform3D(0.506786, 0, -0.862072, 0, 1, 0, 0.862072, 0, 0.506786, 8.96378, 0, -8.75564)
@@ -68,7 +68,7 @@ transform = Transform3D(0.487494, 0, -0.873126, 0, 1, 0, 0.873126, 0, 0.487494, 
 transform = Transform3D(-0.0630696, 0, -0.998009, 0, 1, 0, 0.998009, 0, -0.0630696, -3.25581, 0, 2.11686)
 
 [node name="prop_spawner" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.697706, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="spawner1" type="Node3D" parent="prop_spawner"]
 transform = Transform3D(0.91046, 0, -0.413597, 0, 1, 0, 0.413597, 0, 0.91046, 14.0707, 0, 0)

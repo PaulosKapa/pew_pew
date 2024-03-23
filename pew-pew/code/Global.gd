@@ -21,9 +21,6 @@ var enemy_drone003 = preload("res://scenes/drone_sky.tscn")
 var enemy_drone004 = preload("res://scenes/drone_wheels.tscn")
 #maps
 var test_map = preload("res://scenes/test_map.tscn")
-var map1 = preload("res://scenes/map1.tscn")
-var map2 = preload("res://scenes/map2.tscn")
-var map3 = preload("res://scenes/map3.tscn")
 var player = preload("res://scenes/player.tscn")
 var env1 = preload("res://environments/environment1.tres")
 # Configure the UDP socket for receiving data from Python

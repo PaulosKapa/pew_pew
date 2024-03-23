@@ -5,9 +5,9 @@ class_name map
 var enemies_spawned = 0
 #declare variables for needed assets
 var floors = [Global.test_floor]
-var walls = [Global.test_wall]#,# Global.table, Global.vending_machine, Global.tree1]
+var walls = [Global.test_wall, Global.table, Global.vending_machine, Global.tree1]
 var props = [Global.test_prop, Global.barel_prop, Global.bench_prop, Global.metal_barel_prop, Global.fench_prop]
-var enemies = [Global.test_enemy]#, Global.enemy_drone001, Global.enemy_drone002, Global.enemy_drone003, Global.enemy_drone004]
+var enemies = [Global.test_enemy, Global.enemy_drone001, Global.enemy_drone002, Global.enemy_drone003, Global.enemy_drone004]
 var player = Global.player
 
 func _ready():
