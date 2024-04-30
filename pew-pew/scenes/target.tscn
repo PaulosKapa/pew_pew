@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbm27nrlnnwh0"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ifj52"]
+
+[node name="target" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.67975, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-09, -1, 0, 0.1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ifj52")
+skeleton = NodePath("")
+
+[node name="Timer" type="Timer" parent="."]

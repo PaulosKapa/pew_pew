@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0um8uaedtymu"]
+
+[ext_resource type="Script" path="res://code/firing_practice.gd" id="1_k0yij"]
+[ext_resource type="PackedScene" uid="uid://cbm27nrlnnwh0" path="res://scenes/target.tscn" id="2_2tr6u"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_r7w3u"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_eu4cw"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[node name="firing_practice" type="Node3D"]
+script = ExtResource("1_k0yij")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
+mesh = SubResource("BoxMesh_r7w3u")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_eu4cw")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.93177, 24.8724)
+
+[node name="target_spawners" type="Node3D" parent="."]
+
+[node name="spawner" type="Node3D" parent="target_spawners"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.095, 6.567, 17.13)
+
+[node name="target" parent="target_spawners/spawner" instance=ExtResource("2_2tr6u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.222442, 0)
+
+[node name="spawn" type="Timer" parent="."]
+
+[connection signal="timeout" from="spawn" to="." method="_on_spawn_timeout"]
