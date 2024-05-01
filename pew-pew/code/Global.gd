@@ -13,6 +13,8 @@ var barel_prop = preload("res://scenes/barel.tscn")
 var bench_prop = preload("res://scenes/bench.tscn")
 var metal_barel_prop = preload("res://scenes/metal_barel.tscn")
 var fench_prop = preload("res://scenes/fench.tscn")
+#target
+var test_target = preload("res://scenes/target.tscn")
 #enemies
 var test_enemy = preload("res://scenes/enemy.tscn")
 var enemy_drone001 = preload("res://scenes/drone_ground.tscn")

@@ -1,7 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0um8uaedtymu"]
+[gd_scene load_steps=9 format=3 uid="uid://c0um8uaedtymu"]
 
 [ext_resource type="Script" path="res://code/firing_practice.gd" id="1_k0yij"]
 [ext_resource type="PackedScene" uid="uid://cbm27nrlnnwh0" path="res://scenes/target.tscn" id="2_2tr6u"]
+[ext_resource type="PackedScene" uid="uid://b6g4vvlfbl8in" path="res://scenes/player_teleportation.tscn" id="3_wjtf6"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0qf75"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_2omdn"]
+sky_material = SubResource("ProceduralSkyMaterial_0qf75")
+
+[sub_resource type="Environment" id="Environment_ttjyw"]
+background_mode = 2
+sky = SubResource("Sky_2omdn")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_r7w3u"]
 
@@ -11,27 +25,64 @@ points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5
 [node name="firing_practice" type="Node3D"]
 script = ExtResource("1_k0yij")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ttjyw")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
 mesh = SubResource("BoxMesh_r7w3u")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["ground"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_eu4cw")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.93177, 24.8724)
-
 [node name="target_spawners" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.1363, 1.14694)
 
 [node name="spawner" type="Node3D" parent="target_spawners"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.095, 6.567, 17.13)
+visible = false
 
 [node name="target" parent="target_spawners/spawner" instance=ExtResource("2_2tr6u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.222442, 0)
+
+[node name="spawner2" type="Node3D" parent="target_spawners"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.095, 8.247, 17.13)
+visible = false
+
+[node name="target" parent="target_spawners/spawner2" instance=ExtResource("2_2tr6u")]
+
+[node name="spawner3" type="Node3D" parent="target_spawners"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.45, 6.567, 17.13)
+visible = false
+
+[node name="target" parent="target_spawners/spawner3" instance=ExtResource("2_2tr6u")]
+
+[node name="spawner4" type="Node3D" parent="target_spawners"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.635, 6.567, 17.13)
+visible = false
+
+[node name="target" parent="target_spawners/spawner4" instance=ExtResource("2_2tr6u")]
+
+[node name="spawner5" type="Node3D" parent="target_spawners"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.095, 4.752, 17.13)
+visible = false
+
+[node name="target" parent="target_spawners/spawner5" instance=ExtResource("2_2tr6u")]
 
 [node name="spawn" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="respawn" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="Player" parent="." instance=ExtResource("3_wjtf6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.13824, 21.9757)
 
 [connection signal="timeout" from="spawn" to="." method="_on_spawn_timeout"]
+[connection signal="timeout" from="respawn" to="." method="_on_respawn_timeout"]

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6g4vvlfbl8in"]
+
+[ext_resource type="Script" path="res://code/Player_teleportation_movement.gd" id="1_4gqib"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dntht"]
+
+[node name="Player" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.61827, 0)
+script = ExtResource("1_4gqib")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.22918, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_dntht")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.695042, -0.547938)
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+target_position = Vector3(0, 0, -10)

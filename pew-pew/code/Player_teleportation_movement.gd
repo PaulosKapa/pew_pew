@@ -18,6 +18,8 @@ func _process(delta):
 				$".".set_position($Camera3D/RayCast3D.get_collision_point()-Vector3(0,-1,0))
 			elif(collider.is_in_group("enemy") and Input.is_action_just_pressed("click")):
 				collider.set_health(collider.get_health()-10)
+			elif(collider.is_in_group("target") and Input.is_action_just_pressed("click")):
+				collider.hide()
 				
 func _input(event):
 	if event is InputEventMouseMotion:
