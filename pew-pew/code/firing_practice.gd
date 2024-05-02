@@ -26,23 +26,33 @@ func spawn():
 		
 		while(can_spawn == false):
 			if(get_node(spawner_list[spawner_to_show]).visible == true):
+				
 				spawner_to_show = randi()%len(spawner_list)
 				
 			else:
 				#add the spawner to a list of spawners that are visible
-				spawned_target.append(spawner_to_show)
-				get_node(spawner_list[spawner_to_show]).show()
+				spawned_target.append(spawner_list[spawner_to_show])
 				
+				get_node(spawner_list[spawner_to_show]).show()
+			
 				
 				can_spawn = true
-	$spawn.start()
+		
 
+	$spawn.start()
+#callable from the player script, when you shoot down the target
+func despawn(col):
+	#hide the target
+	col.get_parent().hide()
+	#delete it from the array so it doesnt have to hide it again
+	spawned_target.erase(str(get_path_to(col.get_parent())))
+	
 func _on_spawn_timeout():
 	#delete and hide the shown spawners
-	
+	print(spawned_target)
 	for spawned_expired_target in spawned_target:
 		
-		get_node(spawner_list[spawned_expired_target]).hide()
+		get_node(spawned_expired_target).hide()
 	spawned_target.clear()
 	
 	$spawn.stop()

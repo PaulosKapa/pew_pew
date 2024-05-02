@@ -19,7 +19,8 @@ func _process(delta):
 			elif(collider.is_in_group("enemy") and Input.is_action_just_pressed("click")):
 				collider.set_health(collider.get_health()-10)
 			elif(collider.is_in_group("target") and Input.is_action_just_pressed("click")):
-				collider.hide()
+				#get the parent of the target and call the despawn function
+				collider.get_parent().get_parent().get_parent().despawn(collider)
 				
 func _input(event):
 	if event is InputEventMouseMotion:
