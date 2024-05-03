@@ -5,7 +5,7 @@ var escape_pressed = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$".".size = Vector2(DisplayServer.window_get_size().x, DisplayServer.window_get_size().y)
-
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -13,14 +13,13 @@ func _process(delta):
 		match escape_pressed:
 				false:
 					$".".show()
-					get_parent().set_movement(false)
-					Engine.time_scale = 0.0
+					
+					get_tree().paused = true
 					Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 					escape_pressed = true
 				true:
 					$".".hide()
-					get_parent().set_movement(true)
-					Engine.time_scale = 1.0
+					get_tree().paused = false
 					Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 					escape_pressed = false
 
