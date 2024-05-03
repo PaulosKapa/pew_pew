@@ -1,3 +1,6 @@
-[gd_scene format=3 uid="uid://cuu0pw8e3cwvu"]
+[gd_scene load_steps=2 format=3 uid="uid://cuu0pw8e3cwvu"]
+
+[ext_resource type="Script" path="res://code/weapon.gd" id="1_k61n7"]
 
 [node name="weapon" type="Node3D"]
+script = ExtResource("1_k61n7")

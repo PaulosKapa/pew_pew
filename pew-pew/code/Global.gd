@@ -25,6 +25,8 @@ var enemy_drone004 = preload("res://scenes/drone_wheels.tscn")
 var test_map = preload("res://scenes/test_map.tscn")
 var player = preload("res://scenes/player.tscn")
 var env1 = preload("res://environments/environment1.tres")
+#weapons
+var test_weapon = preload("res://scenes/weapon.tscn")
 # Configure the UDP socket for receiving data from Python
 var python_address : String = "127.0.0.1"
 var python_port : int = 12345
@@ -33,6 +35,7 @@ var python_socket := PacketPeerUDP.new()
 var data_list
 var begin = false
 var mouse = true
+var weapon_id = null
 
 func _ready():
 	# Bind the socket to the specified address and port
@@ -56,3 +59,8 @@ func set_mouse(m):
 	mouse = m
 func get_mouse():
 	return mouse
+#get and se the weapon that the player will use. The id will be set via the esp. Probably placeholder code for nows
+func get_weapon_id():
+	return(weapon_id)
+func set_weapon_id(weapon):
+	weapon_id = weapon
