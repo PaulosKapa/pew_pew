@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://o4q2rsdds3eb"]
+[gd_scene load_steps=19 format=3 uid="uid://o4q2rsdds3eb"]
 
 [ext_resource type="PackedScene" uid="uid://d3rm8kl6gwspb" path="res://scenes/bench.tscn" id="2_5h0w3"]
 [ext_resource type="PackedScene" uid="uid://dnulv5byghjfe" path="res://scenes/fench.tscn" id="3_n0csx"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://btd4t3he5din0" path="res://scenes/drone_ground.tscn" id="11_67aex"]
 [ext_resource type="PackedScene" uid="uid://bqy6etbqhfj71" path="res://scenes/metal_barel.tscn" id="12_envgv"]
 [ext_resource type="PackedScene" uid="uid://b6g4vvlfbl8in" path="res://scenes/player_teleportation.tscn" id="12_nrdnn"]
+[ext_resource type="PackedScene" uid="uid://dst7y8jgaa6u0" path="res://scenes/escape.tscn" id="13_atwy6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ot6be"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -24,7 +25,9 @@ sky_material = SubResource("ProceduralSkyMaterial_ot6be")
 background_mode = 2
 sky = SubResource("Sky_ki0si")
 tonemap_mode = 2
+ssil_radius = 1.47
 glow_enabled = true
+volumetric_fog_density = 0.2605
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ocg0x"]
 size = Vector3(30, 1, 30)
@@ -83,3 +86,6 @@ transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, 
 transform = Transform3D(0.03574, 0, 0.498721, 0, 0.5, 0, -0.498721, 0, 0.03574, -9.30242, 1.73911, 9.95751)
 
 [node name="Player" parent="." instance=ExtResource("12_nrdnn")]
+
+[node name="Control" parent="Player" instance=ExtResource("13_atwy6")]
+visible = false
