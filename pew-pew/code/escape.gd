@@ -4,7 +4,7 @@ var escape_pressed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$".".size = Vector2(DisplayServer.window_get_size().x, DisplayServer.window_get_size().y)
+
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

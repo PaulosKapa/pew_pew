@@ -11,8 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://cikf4p4357bi2" path="res://scenes/drone_patrol.tscn" id="10_65olx"]
 [ext_resource type="PackedScene" uid="uid://btd4t3he5din0" path="res://scenes/drone_ground.tscn" id="11_67aex"]
 [ext_resource type="PackedScene" uid="uid://bqy6etbqhfj71" path="res://scenes/metal_barel.tscn" id="12_envgv"]
-[ext_resource type="PackedScene" uid="uid://b6g4vvlfbl8in" path="res://scenes/player_teleportation.tscn" id="12_nrdnn"]
 [ext_resource type="PackedScene" uid="uid://dst7y8jgaa6u0" path="res://scenes/escape.tscn" id="13_atwy6"]
+[ext_resource type="PackedScene" uid="uid://w8sn0822ekij" path="res://scenes/multiplayer_test.tscn" id="14_7lu2k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ot6be"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -86,6 +86,5 @@ transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, 
 transform = Transform3D(0.03574, 0, 0.498721, 0, 0.5, 0, -0.498721, 0, 0.03574, -9.30242, 1.73911, 9.95751)
 
 [node name="Control" parent="." instance=ExtResource("13_atwy6")]
-visible = false
 
-[node name="Player" parent="." instance=ExtResource("12_nrdnn")]
+[node name="multiplayer_test" parent="." instance=ExtResource("14_7lu2k")]
