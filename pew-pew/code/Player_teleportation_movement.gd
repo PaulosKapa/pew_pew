@@ -33,7 +33,7 @@ func _physics_process(delta):
 				#get the parent of the target and call the despawn function
 				target_shoot.rpc(str(collider))
 			elif(collider.is_in_group("player") and Input.is_action_just_pressed("click")):
-				enemy_shoot.rpc_id(collider.get_multiplayer_authority())
+				enemy_shoot.rpc_id(collider.get_multiplayer_authority(), str(collider))
 	#enemy_shoot.rpc_id(enemy_shoot.get_multiplayer_authority())
 #have to find how to get the nodes relatice to the player
 @rpc("call_local")
@@ -41,19 +41,18 @@ func move():
 	$".".set_position($Camera3D/RayCast3D.get_collision_point()-Vector3(0,-1,0))
 @rpc("call_local")
 func ai_shoot(collider):
-	get_node(collider).set_health(get_node(collider).get_health()-weapon_to_spawn.get_dmg())
+	#brcause the collider was outside of the player node scope, you get the node using a relative path from the grandparent
+	get_parent().get_parent().get_node(collider).set_health(get_parent().get_parent().get_node(collider).get_health()-weapon_to_spawn.get_dmg())
 @rpc("call_local")
 func target_shoot(collider):
-	get_node(collider).get_parent().get_parent().get_parent().despawn(get_node(collider))
+	get_parent().get_parent().get_node(collider).get_parent().get_parent().get_parent().despawn(get_node(collider))
 @rpc("any_peer")
-func enemy_shoot():
-	if $Camera3D/RayCast3D.is_colliding():
-		var collider = $Camera3D/RayCast3D.get_collider()
-		print(collider.get_health())
+func enemy_shoot(collider):
+	collider = get_parent().get_node(collider)
 	#print(get_node(collider))
-	#collider.set_health(collider.get_health()-weapon_to_spawn.get_dmg())
-	#if(collider.get_health() <=0):
-		#get_tree().change_scene_to_file("res://scenes/main.tscn")
+	collider.set_health(collider.get_health()-weapon_to_spawn.get_dmg())
+	if(collider.get_health() <=0):
+		collider.get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 func _input(event):
 	if not is_multiplayer_authority(): return
