@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://l24vmjtk2ixm"]
+[gd_scene load_steps=6 format=3 uid="uid://l24vmjtk2ixm"]
 
 [ext_resource type="Script" path="res://code/test_map.gd" id="1_27lue"]
+[ext_resource type="PackedScene" uid="uid://w8sn0822ekij" path="res://scenes/multiplayer_test.tscn" id="2_yw46o"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xcoir"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -85,7 +86,6 @@ transform = Transform3D(-0.837576, 0, -0.546321, 0, 1, 0, 0.546321, 0, -0.837576
 [node name="spawner5" type="Node3D" parent="prop_spawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.78434, 0, 6.43977)
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.15788, 26.5925)
+[node name="multiplayer_test" parent="." instance=ExtResource("2_yw46o")]
 
 [connection signal="timeout" from="Enemy/Timer" to="." method="_on_timer_timeout"]

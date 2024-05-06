@@ -25,15 +25,18 @@ func _physics_process(delta):
 	
 	if $Camera3D/RayCast3D.is_colliding():
 			var collider = $Camera3D/RayCast3D.get_collider()
-			if(collider.is_in_group("ground") and Input.is_action_just_pressed("click")):
-				move.rpc()
-			elif(collider.is_in_group("enemy") and Input.is_action_just_pressed("click")):
-				ai_shoot.rpc(str(collider))
-			elif(collider.is_in_group("target") and Input.is_action_just_pressed("click")):
+			print(collider)
+			if(Input.is_action_just_pressed("click")):
+				if(collider.is_in_group("ground")):
+					move.rpc()
+				elif(collider.is_in_group("enemy")):
+					ai_shoot.rpc(str(collider))
+				elif(collider.is_in_group("target")):
 				#get the parent of the target and call the despawn function
-				target_shoot.rpc(str(collider))
-			elif(collider.is_in_group("player") and Input.is_action_just_pressed("click")):
-				enemy_shoot.rpc_id(collider.get_multiplayer_authority(), str(collider))
+					target_shoot.rpc(str(collider))
+				elif(collider.is_in_group("player")):
+					enemy_shoot.rpc_id(collider.get_multiplayer_authority(), str(collider))
+			
 	#enemy_shoot.rpc_id(enemy_shoot.get_multiplayer_authority())
 #have to find how to get the nodes relatice to the player
 @rpc("call_local")

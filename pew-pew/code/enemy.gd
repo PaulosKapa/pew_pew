@@ -13,7 +13,8 @@ var nearby_enemies = []
 enum{IDLE,
 	ALERT,
 	HUNT,
-	FOLLOW
+	#FOLLOW,
+	STORY
 }
 var state = IDLE
 
@@ -21,15 +22,17 @@ var state = IDLE
 func _physics_process(delta):
 	#try to not collide enemies
 	
-	for enemy in nearby_enemies:
-		#print(global_position>enemy.global_position+Vector3(1,0,1) or global_position>enemy.global_position+Vector3(-1,0,-1))
-		if(global_position==enemy.global_position+Vector3(1,0,1)):
-			global_position = global_position - Vector3(1,0,1)
+	#for enemy in nearby_enemies:
+		##print(global_position>enemy.global_position+Vector3(1,0,1) or global_position>enemy.global_position+Vector3(-1,0,-1))
+		#if(global_position>enemy.global_position+Vector3(1,0,1) or global_position>enemy.global_position+Vector3(-1,0,-1)):
+			#global_position = global_position - Vector3(1,0,1)
+			
 	match state:
 		
 		HUNT:
-			for enemy in nearby_enemies:
-				follow(enemy)
+			
+			#for enemy in nearby_enemies:
+				#follow(enemy)
 			look_at(target.global_transform.origin, Vector3.UP)
 			move_to_target(delta)
 			shoot()
@@ -44,6 +47,7 @@ func _physics_process(delta):
 				if(hit.is_in_group("player")):
 					target=hit
 					state = HUNT
+					print(target)
 				elif(hit.is_in_group("wall")):
 					#if the ray still hits the same wall
 					if(previous_hit == "wall"):
@@ -57,8 +61,8 @@ func _physics_process(delta):
 				previous_hit = null
 		#if there is not a target, but there is a prop, go to the prop
 		ALERT:
-			for enemy in nearby_enemies:
-				follow(enemy)
+			#for enemy in nearby_enemies:
+				#follow(enemy)
 			look_at(target.global_transform.origin, Vector3.UP)
 			move_to_target(delta)
 			var origin = ray.global_transform.origin
@@ -74,7 +78,7 @@ func _physics_process(delta):
 		
 	#set the enemy spawner logic and delete the enemy
 	if get_health() == 0:
-		get_parent().get_parent().get_parent().set_enemy_player(get_parent().get_parent().get_parent().get_enemy_player() - 1)
+		
 		queue_free()
 
 #when the player gets in the collision shape of the enemy
@@ -99,8 +103,14 @@ func _on_area_3d_body_exited(body):
 #move to the global position of the player
 func move_to_target(delta):
 	var direction
-	if(target.get_parent() != null):
-		direction = (target.get_parent().transform.origin - transform.origin).normalized()
+	if(target != null):
+		if(target.is_in_group("player")):
+			if(sqrt((target.global_position.x-global_position.x)**2.0+(target.global_position.z-global_position.z)**2.0)>5):
+				direction = (target.transform.origin - transform.origin).normalized()
+			else:
+				direction = Vector3.ZERO
+		else:
+			direction = (target.get_parent().transform.origin - transform.origin).normalized()
 	else:
 		direction = (target.transform.origin - transform.origin).normalized()
 	velocity = direction * speed
@@ -133,7 +143,7 @@ func get_health():
 	return(health)
 func set_health(hp):
 	health = hp
-#follow the leader enemy
-func follow(enemy):
-	enemy.target = target
-	enemy.state = state
+##follow the leader enemy
+#func follow(enemy):
+	#enemy.target = target
+	#enemy.state = state

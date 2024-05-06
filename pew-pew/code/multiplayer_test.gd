@@ -29,6 +29,7 @@ func add_player(peer_id):
 	var pl = player.instantiate()
 	pl.name = str(peer_id)
 	add_child(pl)
+	pl.set_as_top_level(true)
 	#spawn in map_point if it doesn't have childred
 
 
