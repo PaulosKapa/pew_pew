@@ -8,7 +8,7 @@ var previous_hit = null
 @export var fire_rate = 1
 @export var health = 100
 @onready var ray = $RayCast3D
-var nearby_enemies = []
+var nearby_objects = []
 
 enum{IDLE,
 	ALERT,
@@ -30,7 +30,10 @@ func _physics_process(delta):
 	match state:
 		
 		HUNT:
-			
+			for object in nearby_objects:
+				#print(str(object) + " " +str(sqrt((object.global_position.x-global_position.x)**2.0+(object.global_position.z-global_position.z)**2.0)<2))
+				if(((object.global_position.x-global_position.x)**2.0+(object.global_position.z-global_position.z)**2.0)<2):
+					global_position +=object.global_position
 			#for enemy in nearby_enemies:
 				#follow(enemy)
 			look_at(target.global_transform.origin, Vector3.UP)
@@ -47,7 +50,7 @@ func _physics_process(delta):
 				if(hit.is_in_group("player")):
 					target=hit
 					state = HUNT
-					print(target)
+					
 				elif(hit.is_in_group("wall")):
 					#if the ray still hits the same wall
 					if(previous_hit == "wall"):
@@ -61,6 +64,15 @@ func _physics_process(delta):
 				previous_hit = null
 		#if there is not a target, but there is a prop, go to the prop
 		ALERT:
+			
+			for object in nearby_objects:
+				##print(str(object) + " " +str(sqrt((object.global_position.x-global_position.x)**2.0+(object.global_position.z-global_position.z)**2.0)<2))
+				if(((object.global_position.x-global_position.x)**2.0+(object.global_position.z-global_position.z)**2.0)<2):
+					#
+					global_position -= global_transform.basis.x
+				
+				
+
 			#for enemy in nearby_enemies:
 				#follow(enemy)
 			look_at(target.global_transform.origin, Vector3.UP)
@@ -83,22 +95,21 @@ func _physics_process(delta):
 
 #when the player gets in the collision shape of the enemy
 func _on_area_3d_body_entered(body):
-	#else scout the map from prop to prop
 	
-	if body.is_in_group("prop") and state == IDLE:
-		target = body
-		state = ALERT
-	#follow the leader
-	elif body.is_in_group("enemy") and body!=$".":
-		nearby_enemies.append(body)
+	
+	if(body.is_in_group("prop") or body.is_in_group("wall")):
+		nearby_objects.append(body)
+	##follow the leader
+	#elif body.is_in_group("enemy") and body!=$".":
+		#nearby_enemies.append(body)
 		
 
 #when they leave
 func _on_area_3d_body_exited(body):
-	if body.is_in_group("Player"):
-		target = null
-	elif body.is_in_group("enemy"):
-		nearby_enemies.erase(body)
+	if(body.is_in_group("prop") or body.is_in_group("wall")):
+		nearby_objects.erase(body)
+	#elif body.is_in_group("enemy"):
+		#nearby_enemies.erase(body)
 
 #move to the global position of the player
 func move_to_target(delta):
@@ -111,9 +122,13 @@ func move_to_target(delta):
 				direction = Vector3.ZERO
 		else:
 			direction = (target.get_parent().transform.origin - transform.origin).normalized()
+			
+			
 	else:
 		direction = (target.transform.origin - transform.origin).normalized()
 	velocity = direction * speed
+	
+	
 	
 	move_and_slide()
 

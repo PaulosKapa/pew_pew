@@ -25,7 +25,7 @@ func _physics_process(delta):
 	
 	if $Camera3D/RayCast3D.is_colliding():
 			var collider = $Camera3D/RayCast3D.get_collider()
-			print(collider)
+			
 			if(Input.is_action_just_pressed("click")):
 				if(collider.is_in_group("ground")):
 					move.rpc()

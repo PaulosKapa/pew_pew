@@ -10,13 +10,14 @@ var enemies = [Global.test_enemy, Global.enemy_drone001, Global.enemy_drone002, 
 var player = Global.player
 
 func _ready():
+	
 	#spawn floor, walls etc..
 	$floor_spawner.add_child(floors.pick_random().instantiate())
 	#if the enemies were children of the node, instead of just spawning at that location, their collision shapes interfere and break the game
 	var enemy = enemies.pick_random().instantiate()
 	
-	$Enemy/spawner1.add_child(enemy)
-	enemy.set_as_top_level(true)
+	#$Enemy/spawner1.add_child(enemy)
+	#enemy.set_as_top_level(true)
 	var enemy1 = enemies.pick_random().instantiate()
 	
 	$Enemy/spawner2.add_child(enemy1)
@@ -48,20 +49,24 @@ func _ready():
 	$Enemy/Timer.start()
 
 
-
+func _physics_process(delta):
+		if(Input.is_action_just_pressed("ui_accept")):
+			Engine.time_scale = 2
+		elif(Input.is_action_just_released("ui_accept")):
+			Engine.time_scale = 1
 
 func _on_timer_timeout():
 	#if there are less than 10 enemies spawn them
 	if($Enemy/spawner1.get_child_count()+$Enemy/spawner2.get_child_count()<10):
 		var enemy = enemies.pick_random().instantiate()
-		
-	
+		#
+	#
 		$Enemy/spawner1.add_child(enemy)
 		enemy.set_as_top_level(true)
-		var enemy1 = enemies.pick_random().instantiate()
-	
-		$Enemy/spawner2.add_child(enemy1)	
-		enemy1.set_as_top_level(true)
+		#var enemy1 = enemies.pick_random().instantiate()
+	#
+		#$Enemy/spawner2.add_child(enemy1)	
+		#enemy1.set_as_top_level(true)
 	$Enemy/Timer.stop()
 	$Enemy/Timer.start()
 

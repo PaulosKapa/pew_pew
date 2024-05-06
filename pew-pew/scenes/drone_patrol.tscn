@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cikf4p4357bi2"]
+[gd_scene load_steps=12 format=3 uid="uid://cikf4p4357bi2"]
 
 [ext_resource type="Script" path="res://code/drone_patrol.gd" id="1_tb15j"]
 
@@ -119,6 +119,9 @@ size = Vector3(2.10327, 1.99268, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_3uf51"]
 radius = 1.0
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_ckd3p"]
+radius = 9.23036
+
 [node name="Drone004" type="CharacterBody3D" groups=["enemy"]]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.415684, 0)
 script = ExtResource("1_tb15j")
@@ -145,3 +148,11 @@ shape = SubResource("SphereShape3D_3uf51")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -100)
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_ckd3p")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

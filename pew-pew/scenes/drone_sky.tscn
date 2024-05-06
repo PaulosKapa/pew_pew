@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://csi6gixt82xg8"]
+[gd_scene load_steps=19 format=3 uid="uid://csi6gixt82xg8"]
 
 [ext_resource type="Script" path="res://code/drone_sky.gd" id="1_gt76q"]
 
@@ -260,6 +260,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_mj3jf")
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_siqih"]
+radius = 3.30877
+
 [node name="Drone002" type="CharacterBody3D" groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 script = ExtResource("1_gt76q")
@@ -301,3 +304,11 @@ skeleton = NodePath("")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -100)
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_siqih")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
