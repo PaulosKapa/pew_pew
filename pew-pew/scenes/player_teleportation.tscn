@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://code/Player_teleportation_movement.gd" id="1_4gqib"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_dntht"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dxc70"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_fh0v0"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_htkfp"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mc6g1"]
 properties/0/path = NodePath(".:position")
@@ -17,17 +17,15 @@ properties/2/path = NodePath("Camera3D:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Player" type="RigidBody3D" groups=["player"]]
+[node name="Player" type="CharacterBody3D" groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_4gqib")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 2.22918, 0, 0, 0, 1, 0, 0, 0)
-shape = SubResource("BoxShape3D_dntht")
+shape = SubResource("CapsuleShape3D_dxc70")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 2.19548, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_fh0v0")
+mesh = SubResource("CapsuleMesh_htkfp")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.69504, -0.547938)

@@ -1,4 +1,4 @@
-extends Node3D
+extends CharacterBody3D
 
 @export var mouse_sensitivity = .3
 @onready var weapon_holster = get_node("weapon_holster")

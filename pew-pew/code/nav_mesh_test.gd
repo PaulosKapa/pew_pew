@@ -23,3 +23,4 @@ func _ready():
 	print($NavigationRegion3D.bake_finished)
 	#
 #
+

@@ -1,17 +1,64 @@
 extends CharacterBody3D
 
 @onready var nav = $NavigationAgent3D
-var speed = 10
-var accel = 10
+@export var speed = 10
+@export var accel = 10
 var target
-func _physics_process(delta):
+var target_name
+var previous_hit = null
+@export var AP = 10
+@export var fire_rate = 1
+@export var health = 100
+@onready var ray = $RayCast3D
+var player_is_nearby = false
+enum{IDLE,
+	ALERT,
+	HUNT,
+	#FOLLOW,
+	STORY
+}
+var state = IDLE
 
-	var hit = $RayCast3D.get_collider()
-	if(hit!=null):
-	
-		if(hit.is_in_group("player")):
-			target = hit
+func _physics_process(delta):
+	print(player_is_nearby)
+	match state:
+		HUNT:
 			move(target, delta)
+			shoot()
+			if(player_is_nearby == false and ray.get_collider() == null):
+				state = IDLE
+		IDLE:
+			$".".rotate_y(.01)
+			var hit = ray.get_collider()
+			if(hit!=null):
+				if(hit.is_in_group("player")):
+					target=hit
+					state = HUNT
+					
+				elif(hit.is_in_group("wall")):
+					#if the ray still hits the same wall
+					if(previous_hit == "wall"):
+						target = null
+						state = IDLE
+					else:
+						target = hit
+						state = ALERT
+			else:
+				#when the ray stops hitting the wall, release
+				previous_hit = null
+		ALERT:
+			move(target, delta)
+			var origin = ray.global_transform.origin
+			var collision_point = ray.get_collision_point()
+			if(sqrt((target.global_position.x-global_position.x)**2.0+(target.global_position.z-global_position.z)**2.0)<5):
+				#print('done')
+				state = IDLE
+				target = null
+				#use this to get the previouse hit of the enemy, so as not to get in a constant lock at the enemy
+				previous_hit = "wall"
+	death()
+	
+			
 func move(target, delta):
 	var direction = Vector3()
 	nav.target_position = target.global_position
@@ -20,4 +67,44 @@ func move(target, delta):
 	velocity = velocity.lerp(direction*speed, accel*delta)
 	look_at(target.global_transform.origin, Vector3.UP)
 	move_and_slide()
+
 	
+func death():
+	if get_health() == 0:
+		queue_free()
+
+func shoot():
+	#hit the player with a ray
+	var hit = ray.get_collider()
+	
+	if(hit!=null):
+		
+		if(hit.is_in_group("player")):
+			var succesfull_hit=[true, false]
+			#get the distance
+			var origin = ray.global_transform.origin
+			var collision_point = ray.get_collision_point()
+			var distance = origin.distance_to(collision_point)
+			#check if there is a succesfull hit
+			if(succesfull_hit.pick_random() == true):
+				#check if the damage is bigger than 0
+				if(int(AP-(distance/10))>0):
+					#hit and set a timer
+					hit.set_health(hit.get_health()-int(AP-(distance/10)))
+				await get_tree().create_timer(fire_rate).timeout
+
+#setters and getters for the health
+func get_health():
+	return(health)
+func set_health(hp):
+	health = hp
+
+
+
+func _on_area_3d_body_entered(body):
+	if(body.is_in_group("player")):
+		player_is_nearby = true
+
+func _on_area_3d_body_exited(body):
+	if(body.is_in_group("player")):
+		player_is_nearby = false
