@@ -1,6 +1,6 @@
 extends Node3D
 #the spawners
-var spawner_list = ["target_spawners/spawner","target_spawners/spawner2","target_spawners/spawner3","target_spawners/spawner4","target_spawners/spawner5"]
+var spawner_list = ["target_spawners/target","target_spawners/target2","target_spawners/target3","target_spawners/target4","target_spawners/target5"]
 var spawned_target = []
 var target = Global.test_target
 # Called when the node enters the scene tree for the first time.
@@ -43,9 +43,9 @@ func spawn():
 #callable from the player script, when you shoot down the target
 func despawn(col):
 	#hide the target
-	col.get_parent().hide()
+	col.hide()
 	#delete it from the array so it doesnt have to hide it again
-	spawned_target.erase(str(get_path_to(col.get_parent())))
+	spawned_target.erase(str(get_path_to(col)))
 	
 func _on_spawn_timeout():
 	#delete and hide the shown spawners

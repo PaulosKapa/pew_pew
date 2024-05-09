@@ -24,6 +24,7 @@ var enemy_drone004 = preload("res://scenes/drone_wheels.tscn")
 #maps
 var test_map = preload("res://scenes/test_map.tscn")
 var player = preload("res://scenes/player.tscn")
+var multi_player = preload("res://scenes/multiplayer_test.tscn")
 var env1 = preload("res://environments/environment1.tres")
 #weapons
 var test_weapon = preload("res://scenes/weapon.tscn")

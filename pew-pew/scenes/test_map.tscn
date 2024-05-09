@@ -1,7 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://l24vmjtk2ixm"]
 
 [ext_resource type="Script" path="res://code/test_map.gd" id="1_27lue"]
-[ext_resource type="PackedScene" uid="uid://w8sn0822ekij" path="res://scenes/multiplayer_test.tscn" id="2_yw46o"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xcoir"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -16,6 +15,8 @@ sky = SubResource("Sky_kqigh")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_4sti4"]
+
 [node name="Test_map" type="Node3D"]
 script = ExtResource("1_27lue")
 
@@ -25,9 +26,6 @@ environment = SubResource("Environment_okeoq")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
-
-[node name="floor_spawner" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="Enemy" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -41,51 +39,55 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20.7259)
 [node name="Timer" type="Timer" parent="Enemy"]
 wait_time = 10.0
 
-[node name="wall_spawner" type="Node3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_4sti4")
+
+[node name="prop_spawner" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="spawner1" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(0.506786, 0, -0.862072, 0, 1, 0, 0.862072, 0, 0.506786, 8.96378, 0, -8.75564)
-
-[node name="spawner2" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(0.311821, 0, 0.950141, 0, 1, 0, -0.950141, 0, 0.311821, 10.9781, 0, 3.74003)
-
-[node name="spawner3" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(-0.0731859, 0, 0.997318, 0, 1, 0, -0.997318, 0, -0.0731859, -11.4095, 0, 1.6643)
-
-[node name="spawner4" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(0.430007, 0, -0.902826, 0, 1, 0, 0.902826, 0, 0.430007, 5.18037, 0, 9.14054)
-
-[node name="spawner5" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(0.667079, 0, -0.744987, 0, 1, 0, 0.744987, 0, 0.667079, -1.28532, 0, 7.60348)
-
-[node name="spawner6" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(-0.378762, 0, -0.925494, 0, 1, 0, 0.925494, 0, -0.378762, -7.41819, 0, -7.2255)
-
-[node name="spawner7" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(0.487494, 0, -0.873126, 0, 1, 0, 0.873126, 0, 0.487494, 4.37211, 0, 2.11686)
-
-[node name="spawner8" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(-0.0630696, 0, -0.998009, 0, 1, 0, 0.998009, 0, -0.0630696, -3.25581, 0, 2.11686)
-
-[node name="prop_spawner" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="spawner1" type="Node3D" parent="prop_spawner"]
+[node name="spawner1" type="Node3D" parent="NavigationRegion3D/prop_spawner"]
 transform = Transform3D(0.91046, 0, -0.413597, 0, 1, 0, 0.413597, 0, 0.91046, 14.0707, 0, 0)
 
-[node name="spawner2" type="Node3D" parent="prop_spawner"]
+[node name="spawner2" type="Node3D" parent="NavigationRegion3D/prop_spawner"]
 transform = Transform3D(-0.846416, 0, 0.532522, 0, 1, 0, -0.532522, 0, -0.846416, -7.72622, 0, -3)
 
-[node name="spawner3" type="Node3D" parent="prop_spawner"]
+[node name="spawner3" type="Node3D" parent="NavigationRegion3D/prop_spawner"]
 transform = Transform3D(0.910503, 0, -0.413502, 0, 1, 0, 0.413502, 0, 0.910503, 5.28123, 0, 4.87572)
 
-[node name="spawner4" type="Node3D" parent="prop_spawner"]
+[node name="spawner4" type="Node3D" parent="NavigationRegion3D/prop_spawner"]
 transform = Transform3D(-0.837576, 0, -0.546321, 0, 1, 0, 0.546321, 0, -0.837576, 12.7177, 0, -6.51902)
 
-[node name="spawner5" type="Node3D" parent="prop_spawner"]
+[node name="spawner5" type="Node3D" parent="NavigationRegion3D/prop_spawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.78434, 0, 6.43977)
 
-[node name="multiplayer_test" parent="." instance=ExtResource("2_yw46o")]
+[node name="wall_spawner" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="spawner1" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(0.506786, 0, -0.862072, 0, 1, 0, 0.862072, 0, 0.506786, 8.96378, 0, -8.75564)
+
+[node name="spawner2" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(0.311821, 0, 0.950141, 0, 1, 0, -0.950141, 0, 0.311821, 10.9781, 0, 3.74003)
+
+[node name="spawner3" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(-0.0731859, 0, 0.997318, 0, 1, 0, -0.997318, 0, -0.0731859, -11.4095, 0, 1.6643)
+
+[node name="spawner4" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(0.430007, 0, -0.902826, 0, 1, 0, 0.902826, 0, 0.430007, 5.18037, 0, 9.14054)
+
+[node name="spawner5" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(0.667079, 0, -0.744987, 0, 1, 0, 0.744987, 0, 0.667079, -1.28532, 0, 7.60348)
+
+[node name="spawner6" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(-0.378762, 0, -0.925494, 0, 1, 0, 0.925494, 0, -0.378762, -7.41819, 0, -7.2255)
+
+[node name="spawner7" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(0.487494, 0, -0.873126, 0, 1, 0, 0.873126, 0, 0.487494, 4.37211, 0, 2.11686)
+
+[node name="spawner8" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(-0.0630696, 0, -0.998009, 0, 1, 0, 0.998009, 0, -0.0630696, -3.25581, 0, 2.11686)
+
+[node name="floor_spawner" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [connection signal="timeout" from="Enemy/Timer" to="." method="_on_timer_timeout"]

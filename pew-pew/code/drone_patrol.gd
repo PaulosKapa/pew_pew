@@ -1,1 +1,1 @@
-extends enemy
+extends enemynav

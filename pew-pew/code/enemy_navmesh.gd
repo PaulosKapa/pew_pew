@@ -1,5 +1,5 @@
 extends CharacterBody3D
-
+class_name enemynav
 @onready var nav = $NavigationAgent3D
 @export var speed = 10
 @export var accel = 10
@@ -20,7 +20,7 @@ enum{IDLE,
 var state = IDLE
 
 func _physics_process(delta):
-	print(player_is_nearby)
+	
 	match state:
 		HUNT:
 			move(target, delta)
@@ -60,13 +60,14 @@ func _physics_process(delta):
 	
 			
 func move(target, delta):
-	var direction = Vector3()
-	nav.target_position = target.global_position
-	direction = nav.get_next_path_position() - global_position
-	direction = direction.normalized()
-	velocity = velocity.lerp(direction*speed, accel*delta)
-	look_at(target.global_transform.origin, Vector3.UP)
-	move_and_slide()
+	if(target!=null):
+		var direction = Vector3()
+		nav.target_position = target.global_position
+		direction = nav.get_next_path_position() - global_position
+		direction = direction.normalized()
+		velocity = velocity.lerp(direction*speed, accel*delta)
+		look_at(target.global_transform.origin, Vector3.UP)
+		move_and_slide()
 
 	
 func death():
@@ -80,6 +81,7 @@ func shoot():
 	if(hit!=null):
 		
 		if(hit.is_in_group("player")):
+			
 			var succesfull_hit=[true, false]
 			#get the distance
 			var origin = ray.global_transform.origin
@@ -91,6 +93,7 @@ func shoot():
 				if(int(AP-(distance/10))>0):
 					#hit and set a timer
 					hit.set_health(hit.get_health()-int(AP-(distance/10)))
+					print(hit.get_health())
 				await get_tree().create_timer(fire_rate).timeout
 
 #setters and getters for the health

@@ -6,7 +6,7 @@ var weapons = [Global.test_weapon]
 const JUMP_VELOCITY = 4.5
 var camera_x_rotation = 0
 var weapon_to_spawn = null
-var health = 10
+var health = 100
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
@@ -22,7 +22,7 @@ func _ready():
 func _physics_process(delta):
 	
 	if not is_multiplayer_authority(): return
-	
+	#death()
 	if $Camera3D/RayCast3D.is_colliding():
 			var collider = $Camera3D/RayCast3D.get_collider()
 			
@@ -45,10 +45,12 @@ func move():
 @rpc("call_local")
 func ai_shoot(collider):
 	#brcause the collider was outside of the player node scope, you get the node using a relative path from the grandparent
-	get_parent().get_parent().get_node(collider).set_health(get_parent().get_parent().get_node(collider).get_health()-weapon_to_spawn.get_dmg())
+	#gets the Enemy 3d node
+	get_parent().get_parent().get_child(2).get_node(collider).set_health(get_parent().get_parent().get_child(2).get_node(collider).get_health()-weapon_to_spawn.get_dmg())
 @rpc("call_local")
 func target_shoot(collider):
-	get_parent().get_parent().get_node(collider).get_parent().get_parent().get_parent().despawn(get_node(collider))
+	#dont change the get_chilkd number!!!!!!!!
+	get_parent().get_parent().despawn(get_child(2).get_node(collider))
 @rpc("any_peer")
 func enemy_shoot(collider):
 	collider = get_parent().get_node(collider)
@@ -73,7 +75,9 @@ func set_health(hp):
 	
 func get_health():
 	return health
-	
+func death():
+	if(get_health()<=0):
+		queue_free()
 @rpc("call_local")
 func equip_weapon():
 	#placeholder code!!!!! the player will choose his gun at the main menu!! Delete later in production
