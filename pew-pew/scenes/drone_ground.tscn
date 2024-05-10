@@ -390,6 +390,10 @@ shape = SubResource("SphereShape3D_m41rx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52223, 0)
 target_position = Vector3(0, 0, -50)
 
+[node name="RayCast3D2" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52223, 0)
+target_position = Vector3(0, -5, 0)
+
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

@@ -10,7 +10,10 @@ var previous_hit = null
 @export var fire_rate = 1
 @export var health = 100
 @onready var ray = $RayCast3D
+@onready var ground_ray = $RayCast3D2
+var moving = true
 var player_is_nearby = false
+var height_position
 enum{IDLE,
 	ALERT,
 	HUNT,
@@ -21,9 +24,29 @@ var state = IDLE
 
 func _physics_process(delta):
 	
+	if(height_position==null):
+		var hit = ground_ray.get_collider()
+		
+		if(hit!=null):
+			if(hit.is_in_group("ground")):
+			
+			
+				#get the distance from the ground
+				var origin = ground_ray.global_transform.origin
+				var collision_point = ground_ray.get_collision_point()
+				var distance = origin.distance_to(collision_point)
+				height_position = distance
+	#keep the same distance form the ground at all time
+	else:
+		
+		global_position.y = height_position
 	match state:
 		HUNT:
-			move(target, delta)
+			if(sqrt((target.global_position.x-global_position.x)**2.0+(target.global_position.z-global_position.z)**2.0)<5):
+				moving = false
+			else:
+				moving = true
+			move(target, delta, moving)
 			shoot()
 			if(player_is_nearby == false and ray.get_collider() == null):
 				state = IDLE
@@ -47,10 +70,11 @@ func _physics_process(delta):
 				#when the ray stops hitting the wall, release
 				previous_hit = null
 		ALERT:
-			move(target, delta)
+			move(target, delta, true)
 			var origin = ray.global_transform.origin
 			var collision_point = ray.get_collision_point()
 			if(sqrt((target.global_position.x-global_position.x)**2.0+(target.global_position.z-global_position.z)**2.0)<5):
+				
 				#print('done')
 				state = IDLE
 				target = null
@@ -59,8 +83,8 @@ func _physics_process(delta):
 	death()
 	
 			
-func move(target, delta):
-	if(target!=null):
+func move(target, delta, moving):
+	if(target!=null and moving == true):
 		var direction = Vector3()
 		nav.target_position = target.global_position
 		direction = nav.get_next_path_position() - global_position
@@ -93,7 +117,7 @@ func shoot():
 				if(int(AP-(distance/10))>0):
 					#hit and set a timer
 					hit.set_health(hit.get_health()-int(AP-(distance/10)))
-					print(hit.get_health())
+					#print(hit.get_health())
 				await get_tree().create_timer(fire_rate).timeout
 
 #setters and getters for the health
@@ -101,8 +125,6 @@ func get_health():
 	return(health)
 func set_health(hp):
 	health = hp
-
-
 
 func _on_area_3d_body_entered(body):
 	if(body.is_in_group("player")):

@@ -9,7 +9,7 @@ var previous_hit = null
 @export var health = 100
 @onready var ray = $RayCast3D
 var nearby_objects = []
-
+var height_position
 enum{IDLE,
 	ALERT,
 	HUNT,
@@ -17,7 +17,6 @@ enum{IDLE,
 	STORY
 }
 var state = IDLE
-
 
 func _physics_process(delta):
 	#try to not collide enemies

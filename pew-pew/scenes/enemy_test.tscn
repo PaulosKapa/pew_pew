@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://code/enemy_test.gd" id="1_gdf66"]
 [ext_resource type="PackedScene" uid="uid://bsub5pb4oxxe6" path="res://scenes/enemy.tscn" id="3_7waw4"]
-[ext_resource type="Script" path="res://code/enviroment_tester_character.gd" id="3_e8sbq"]
 [ext_resource type="PackedScene" uid="uid://csi6gixt82xg8" path="res://scenes/drone_sky.tscn" id="4_jsyxk"]
+[ext_resource type="PackedScene" uid="uid://w8sn0822ekij" path="res://scenes/multiplayer_test.tscn" id="4_yys4b"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g0dxg"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -18,13 +18,13 @@ sky = SubResource("Sky_oa8co")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_dfo6y"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_syhvp"]
 size = Vector3(40, 1, 40)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cm4o1"]
 size = Vector3(40, 1, 40)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ksksn"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_gdf66")
@@ -36,42 +36,40 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_owk2c")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-mesh = SubResource("BoxMesh_syhvp")
+[node name="Node3D" type="Node3D" parent="."]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("BoxShape3D_cm4o1")
-
-[node name="wall_spawner" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4044, 1, 0)
-
-[node name="spawner1" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.10399, 0, 0)
-
-[node name="spawner2" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8016, 0, 0)
-
-[node name="spawner3" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.52217, 0, -13.0158)
-
-[node name="spawner4" type="Node3D" parent="wall_spawner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.82918, 0, -13.8935)
-
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.943883, 0)
-script = ExtResource("3_e8sbq")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-shape = SubResource("CapsuleShape3D_ksksn")
-
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.567906, 0)
-
-[node name="Enemy" parent="." instance=ExtResource("3_7waw4")]
+[node name="Enemy" parent="Node3D" instance=ExtResource("3_7waw4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.515991, -15.0633)
 
-[node name="Drone002" parent="." instance=ExtResource("4_jsyxk")]
-transform = Transform3D(0.761889, 0, -0.647708, 0, 1, 0, 0.647708, 0, 0.761889, 3.69386, 0.168709, -11.8598)
+[node name="Drone002" parent="Node3D" instance=ExtResource("4_jsyxk")]
+transform = Transform3D(0.761889, 0, -0.647708, 0, 1, 0, 0.647708, 0, 0.761889, 3.69386, 0.766397, -11.8598)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_dfo6y")
+
+[node name="wall_spawner" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4044, 1, 0)
+
+[node name="spawner1" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.10399, 0, 0)
+
+[node name="spawner2" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8016, 0, 0)
+
+[node name="spawner3" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.52217, 0, -13.0158)
+
+[node name="spawner4" type="Node3D" parent="NavigationRegion3D/wall_spawner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.82918, 0, -13.8935)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_syhvp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D" groups=["ground"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_cm4o1")
+
+[node name="multiplayer_test" parent="." instance=ExtResource("4_yys4b")]

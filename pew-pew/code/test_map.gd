@@ -35,13 +35,16 @@ func _ready():
 	$NavigationRegion3D.bake_navigation_mesh()
 	print($NavigationRegion3D.bake_finished)
 	var enemy = enemies.pick_random().instantiate()
-	enemy.global_position = $Enemy/spawner1.global_position
+	
 	$Enemy.add_child(enemy)
+	
 	enemy.set_as_top_level(true)
+	enemy.global_position = $Enemy/spawner1.global_position
 	var enemy1 = enemies.pick_random().instantiate()
-	enemy1.global_position = $Enemy/spawner2.global_position
+	
 	$Enemy.add_child(enemy1)
 	enemy1.set_as_top_level(true)
+	enemy1.global_position = $Enemy/spawner2.global_position
 	#add the player as a child of the parent node, not a simple node. Then get the node's rotation and position
 	#var player_spawners = [$prop_spawner/spawner1.get_children(), $prop_spawner/spawner2.get_children(), $prop_spawner/spawner3.get_children(), $prop_spawner/spawner4.get_children(), $prop_spawner/spawner5.get_children()]	
 	#var child_spawner = player_spawners.pick_random()[0].get_children()
@@ -58,13 +61,15 @@ func _on_timer_timeout():
 	#if there are less than 10 enemies spawn them
 	if($Enemy.get_child_count()<10):
 		var enemy = enemies.pick_random().instantiate()
-		enemy.global_position = $Enemy/spawner1.global_position
+		
 		$Enemy.add_child(enemy)
 		enemy.set_as_top_level(true)
+		enemy.global_position = $Enemy/spawner1.global_position
 		var enemy1 = enemies.pick_random().instantiate()
-		enemy1.global_position = $Enemy/spawner2.global_position
+		
 		$Enemy.add_child(enemy1)
 		enemy1.set_as_top_level(true)
+		enemy1.global_position = $Enemy/spawner2.global_position
 	$Enemy/Timer.stop()
 	$Enemy/Timer.start()
 

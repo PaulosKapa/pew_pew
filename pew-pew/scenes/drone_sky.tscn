@@ -305,6 +305,9 @@ skeleton = NodePath("")
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -100)
 
+[node name="RayCast3D2" type="RayCast3D" parent="."]
+target_position = Vector3(0, -5, 0)
+
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bsub5pb4oxxe6"]
 
-[ext_resource type="Script" path="res://code/enemy.gd" id="1_i5op2"]
+[ext_resource type="Script" path="res://code/enemy_navmesh.gd" id="1_0rgbs"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_myg76"]
 
@@ -10,7 +10,7 @@
 radius = 10.0
 
 [node name="Enemy" type="CharacterBody3D" groups=["enemy"]]
-script = ExtResource("1_i5op2")
+script = ExtResource("1_0rgbs")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
@@ -29,6 +29,11 @@ shape = SubResource("SphereShape3D_ivpk4")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -50)
+
+[node name="RayCast3D2" type="RayCast3D" parent="."]
+target_position = Vector3(0, -5, 0)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
