@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://jn4dnaaqedd7"]
+
+[ext_resource type="Script" path="res://test.cs" id="1_cuaqv"]
+[ext_resource type="Resource" uid="uid://daaqygq52tqvm" path="res://TheIntercept.ink" id="2_0ftbn"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_cuaqv")
+story = ExtResource("2_0ftbn")

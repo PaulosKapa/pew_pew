@@ -23,23 +23,23 @@ enum{IDLE,
 var state = IDLE
 
 func _physics_process(delta):
-	
-	if(height_position==null):
-		var hit = ground_ray.get_collider()
-		
-		if(hit!=null):
-			if(hit.is_in_group("ground")):
-			
-			
-				#get the distance from the ground
-				var origin = ground_ray.global_transform.origin
-				var collision_point = ground_ray.get_collision_point()
-				var distance = origin.distance_to(collision_point)
-				height_position = distance
-	#keep the same distance form the ground at all time
-	else:
-		
-		global_position.y = height_position
+	#failed levitation code
+	#if(height_position==null):
+		#var hit = ground_ray.get_collider()
+		#
+		#if(hit!=null):
+			#if(hit.is_in_group("ground")):
+			#
+			#
+				##get the distance from the ground
+				#var origin = ground_ray.global_transform.origin
+				#var collision_point = ground_ray.get_collision_point()
+				#var distance = origin.distance_to(collision_point)
+				#height_position = distance
+	##keep the same distance form the ground at all time
+	#else:
+		#pass
+		#global_position.y = height_position
 	match state:
 		HUNT:
 			if(sqrt((target.global_position.x-global_position.x)**2.0+(target.global_position.z-global_position.z)**2.0)<5):
