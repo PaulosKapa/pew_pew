@@ -13,6 +13,8 @@ func _enter_tree():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if not is_multiplayer_authority(): return
+	#hides the mesh, so it is only visible on other players
+	$MeshInstance3D.hide()
 	equip_weapon.rpc()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$Camera3D.current = true
