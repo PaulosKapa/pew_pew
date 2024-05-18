@@ -1,18 +1,22 @@
 #include <Arduino.h>
 #include <esp_now.h>
 #include "WiFi.h"
-
+struct SensorData {
+  int X;
+  int Y;
+  int Z;
+};
 
 // Callback when data is received
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) 
 {
-  int dataReceived;
-  memcpy(&dataReceived, incomingData, sizeof(dataReceived));
+  // Create an instance of the struct
+    SensorData sensorData;
+  memcpy(&sensorData, incomingData, sizeof(sensorData));
 
-  Serial.print("Data Received: ");
-  Serial.println(dataReceived);
+  Serial.println(String(sensorData.X) + ',' + String(sensorData.Y) + ',' + String(sensorData.Z));
 
-  Serial.println();    
+  
 }
 
 void setup()
