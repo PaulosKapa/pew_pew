@@ -48,16 +48,18 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_m4rry")
 
-[node name="Drone002" parent="." instance=ExtResource("7_cwoqi")]
+[node name="enemies" type="Node3D" parent="."]
+
+[node name="Drone002" parent="enemies" instance=ExtResource("7_cwoqi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0365, 1.7, 3.66839)
 
-[node name="Drone004" parent="." instance=ExtResource("10_65olx")]
+[node name="Drone004" parent="enemies" instance=ExtResource("10_65olx")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -4.8922, 1.81188, 7.45362)
 
-[node name="Drone001" parent="." instance=ExtResource("11_67aex")]
+[node name="Drone001" parent="enemies" instance=ExtResource("11_67aex")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10.3311, 1.12861, 7.07946)
 
-[node name="Drone003" parent="." instance=ExtResource("9_ub8m6")]
+[node name="Drone003" parent="enemies" instance=ExtResource("9_ub8m6")]
 transform = Transform3D(0.03574, 0, 0.498721, 0, 0.5, 0, -0.498721, 0, 0.03574, -9.30242, 1.73911, 9.95751)
 
 [node name="Control" parent="." instance=ExtResource("13_atwy6")]
