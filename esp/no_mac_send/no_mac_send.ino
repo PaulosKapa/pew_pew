@@ -68,10 +68,10 @@ void setup()
   OZ = mpu6050.getAngleZ(); 
 }
 
-int dataToSend = 1;
+
 void loop()
 {
-    dataToSend++;
+    
      mpu6050.update();
   X = mpu6050.getAngleX() - (OX); // Getting angle X Y Z
   Y = mpu6050.getAngleY() - (OY);

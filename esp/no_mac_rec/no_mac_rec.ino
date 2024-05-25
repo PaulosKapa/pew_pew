@@ -6,15 +6,21 @@ struct SensorData {
   int Y;
   int Z;
 };
+int OX, OY, OZ;
+
 
 // Callback when data is received
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) 
 {
   // Create an instance of the struct
     SensorData sensorData;
+    
   memcpy(&sensorData, incomingData, sizeof(sensorData));
-
-  Serial.println(String(sensorData.X) + ',' + String(sensorData.Y) + ',' + String(sensorData.Z));
+  OX = sensorData.X;
+  OY = sensorData.Y;
+  OZ = sensorData.Z;
+  
+  
 
   
 }
@@ -22,7 +28,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len)
 void setup()
 {
 
-  Serial.begin(115200);
+  Serial.begin(9600);
   delay(100);
 
   Serial.println("Starting...\n");
@@ -50,4 +56,8 @@ void setup()
 
 void loop()
 {
+  
+  //Serial.println(String(sensorData.X) + ',' + String(sensorData.Y) + ',' + String(sensorData.Z));
+  Serial.println(String(OX) + ',' + String(OY) + ',' + String(OZ));
+  
 }
