@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "Exx/g6zy+dLJWZ7AdnfadhzEu0kgVKRV74E/VP/zV8odSCqmBwv7DEfCvj+npkz0wfyAQbk7jsw+e232BByBeA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Thinkpad\\Documents\\GitHub\\pew_pew\\ink_godot\\ink_godot.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Thinkpad\\.nuget\\packages\\godot.sourcegenerators\\4.2.1\\godot.sourcegenerators.4.2.1.nupkg.sha512",
+    "C:\\Users\\Thinkpad\\.nuget\\packages\\godotsharp\\4.2.1\\godotsharp.4.2.1.nupkg.sha512",
+    "C:\\Users\\Thinkpad\\.nuget\\packages\\godotsharpeditor\\4.2.1\\godotsharpeditor.4.2.1.nupkg.sha512"
+  ],
+  "logs": []
+}
