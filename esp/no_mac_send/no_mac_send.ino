@@ -67,11 +67,11 @@ void setup()
   OY = mpu6050.getAngleY();
   OZ = mpu6050.getAngleZ(); 
 }
-
+int ss;
 
 void loop()
 {
-    
+    ss++;
      mpu6050.update();
   X = mpu6050.getAngleX() - (OX); // Getting angle X Y Z
   Y = mpu6050.getAngleY() - (OY);
