@@ -16,6 +16,7 @@ func _ready():
 	#hides the mesh, so it is only visible on other players
 	$MeshInstance3D.hide()
 	equip_weapon.rpc()
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$Camera3D.current = true
 
@@ -32,12 +33,15 @@ func _physics_process(delta):
 				if(collider.is_in_group("ground")):
 					move.rpc()
 				elif(collider.is_in_group("enemy")):
-					ai_shoot.rpc(str(collider))
+					if(weapon_to_spawn.shoot()>0):
+						ai_shoot.rpc(str(collider))
 				elif(collider.is_in_group("target")):
 				#get the parent of the target and call the despawn function
-					target_shoot.rpc(str(collider))
+					if(weapon_to_spawn.shoot()>0):
+						target_shoot.rpc(str(collider))
 				elif(collider.is_in_group("player")):
-					enemy_shoot.rpc_id(collider.get_multiplayer_authority(), str(collider))
+					if(weapon_to_spawn.shoot()>0):
+						enemy_shoot.rpc_id(collider.get_multiplayer_authority(), str(collider))
 			
 	#enemy_shoot.rpc_id(enemy_shoot.get_multiplayer_authority())
 #have to find how to get the nodes relatice to the player
@@ -83,7 +87,7 @@ func death():
 @rpc("call_local")
 func equip_weapon():
 	#placeholder code!!!!! the player will choose his gun at the main menu!! Delete later in production
-	Global.set_weapon_id(1)
+	Global.set_weapon_id(3)
 	
 	#check which of the weapon in the game has the id of the weapon that the player has equiped and use that
 	for weapon in weapons:

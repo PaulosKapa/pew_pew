@@ -1,8 +1,14 @@
 #include <Arduino.h>
-#include <esp_now.h>
+#include <ESP32_NOW.h>
 #include "WiFi.h"
 #include <MPU6050_tockn.h>
 #include <Wire.h>
+#include <esp_mac.h>  // For the MAC2STR and MACSTR macros
+
+//gun id and shooting mode
+int gunId = 1;
+//1: semi, 2: burst, 3: auto, 4 semi+ burst, 5: semi + auto, 6: semi + burst + auto, 7: burst + auto, 9: pump/bolt, 9: laser
+int shootingMode = 1;
 //for the magazin
 int magazinPin = 2;
 int magazinInsertedPin = 3;
@@ -11,11 +17,16 @@ int magazineVar;
 int previousMagazineVar;
 //shooting
 int trigger = 4;
-int ammo = 1;
+int ammo;
 int shooting;
+int sMode;
 //slide
 int autoSlide = 5;
 int manualSlide = 6;
+int unlocking = 0;
+//transporting
+int action = 7;
+int transporting;
 //barrel
 int motorPin1 = 38; 
 int motorPin2 = 36; 
@@ -32,56 +43,80 @@ struct SensorData {
   int Y;
   int Z;
   int shot;
+  int gunId;
+  int unlock;
+  int actions;
   int magId;
+  int shootingMode;
 };
 
-void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-  // Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success 1" : "Delivery Fail 1");
-  // if (status ==0){
-  //   Serial.println("Delivery Success 2");
-  // }
-  // else{
-  //   Serial.println("Delivery fail 2");
-  // }
+/* Definitions */
+#define ESPNOW_WIFI_CHANNEL 6
+// Creating a new class that inherits from the ESP_NOW_Peer class is required.
 
-  // Serial.println();
-}
-       
+class ESP_NOW_Broadcast_Peer : public ESP_NOW_Peer {
+public:
+  // Constructor of the class using the broadcast address
+  ESP_NOW_Broadcast_Peer(uint8_t channel, wifi_interface_t iface, const uint8_t *lmk) : ESP_NOW_Peer(ESP_NOW.BROADCAST_ADDR, channel, iface, lmk) {}
 
-
-void setup() {
-  analogReadResolution(AnalogReadResolution);
-  //esp now
-  // Set device as a Wi-Fi Station
-  WiFi.mode(WIFI_STA);
-
-  Serial.println(WiFi.macAddress());
-
-  // Init ESP-NOW
-  if (esp_now_init() != ESP_OK) {
-    Serial.println("Error initializing ESP-NOW");
-    for(;;) {      delay(1);  } // do not initialize wait forever
+  // Destructor of the class
+  ~ESP_NOW_Broadcast_Peer() {
+    remove();
   }
 
-  Serial.println("initialized ESP-NOW");
+  // Function to properly initialize the ESP-NOW and register the broadcast peer
+  bool begin() {
+    if (!ESP_NOW.begin() || !add()) {
+      log_e("Failed to initialize ESP-NOW or register the broadcast peer");
+      return false;
+    }
+    return true;
+  }
 
+  // Function to send a message to all devices within the network
+  bool send_message(const uint8_t *data, size_t len) {
+    if (!send(data, len)) {
+      log_e("Failed to broadcast message");
+      return false;
+    }
+    return true;
+  }
+};
 
-  // Once ESPNow is successfully Init, we will register for Send CB to
-  // get the status of Trasnmitted packet
-  esp_now_register_send_cb(OnDataSent);
+/* Global Variables */
 
-   // Register peer
-  esp_now_peer_info_t peerInfo;
-  memcpy(peerInfo.peer_addr, broadcastAddress, 6);
-  peerInfo.channel = 0;  
-  peerInfo.encrypt = false;
+uint32_t msg_count = 0;
 
-   // Add peer        
-  if (esp_now_add_peer(&peerInfo) != ESP_OK){
-    Serial.println("Failed to add peer");
-    for(;;) {      delay(1);  } // do not initialize wait forever
-  } 
-  //magazin
+// Create a broadcast peer object
+ESP_NOW_Broadcast_Peer broadcast_peer(ESPNOW_WIFI_CHANNEL, WIFI_IF_STA, NULL);
+
+void setup() {
+  Serial.begin(115200);
+//   while (!Serial) {
+//      delay(10);
+//  }
+
+  // Initialize the Wi-Fi module
+  WiFi.mode(WIFI_STA);
+  WiFi.setChannel(ESPNOW_WIFI_CHANNEL);
+  while (!WiFi.STA.started()) {
+    delay(100);
+  }
+
+  Serial.println("ESP-NOW Example - Broadcast Master");
+  Serial.println("Wi-Fi parameters:");
+  Serial.println("  Mode: STA");
+  Serial.println("  MAC Address: " + WiFi.macAddress());
+  Serial.printf("  Channel: %d\n", ESPNOW_WIFI_CHANNEL);
+
+  // Register the broadcast peer
+  if (!broadcast_peer.begin()) {
+    Serial.println("Failed to initialize broadcast peer");
+    Serial.println("Reebooting in 5 seconds...");
+    delay(5000);
+    ESP.restart();
+  }
+    //magazin
   pinMode(magazinInsertedPin, INPUT_PULLUP);
   pinMode(magazinPin, INPUT);
   //read the magazine when setting up
@@ -94,6 +129,8 @@ void setup() {
   //slide
   pinMode(autoSlide, INPUT_PULLUP);
   pinMode(manualSlide, INPUT_PULLUP);
+  //transporting
+  pinMode(action, INPUT_PULLUP);
   //accelerometer
   Wire.begin();         // Initialise I2C communication
   mpu6050.begin();      // Initialise Gyro communication          
@@ -101,12 +138,15 @@ void setup() {
   OY = mpu6050.getAngleY();
   OZ = mpu6050.getAngleZ(); 
   Serial.begin(115200);
+  analogReadResolution(AnalogReadResolution);
+  Serial.println("Setup complete.");
   
-
 }
 
 void loop() {
+  
   shooting = 0;
+  transporting = 0;
   // put your main code here, to run repeatedly:
   // Create an instance of the struct and assign values
   SensorData sensorData;
@@ -116,38 +156,42 @@ void loop() {
     magazineId = analogLoading(magazinPin, magazineVar);
   }
   previousMagazineVar = magazineVar;
-  
+  if(digitalRead(action)==0){
+    transporting = transport();
+  }
   if(digitalRead(trigger)==0 && ammo>0){
-    shoot();
-    shooting = 1;
+    shooting = shoot();
     
   }
   if(ammo == 0){
-    lock();
-    if(autoSlide == 0 || manualSlide == 0){
-      unlock();
+    unlocking = lock();
+    if(digitalRead(autoSlide) == 0 || digitalRead(manualSlide) == 0){
+      unlocking = unlock();
     }
+  }
+  if(digitalRead(action) == 0){
+    transporting = transport();
   }
   
   move();
-  sensorData.magId = magazineId;
+  sensorData.shootingMode = shootingMode;
+  sensorData.gunId = gunId;
   sensorData.shot = shooting;
+  sensorData.unlock = unlocking;
+  sensorData.actions = transporting;
   sensorData.X = X;
   sensorData.Y = Y;
   sensorData.Z = Z;
+  sensorData.magId = magazineId;
+  
   // Send message via ESP-NOW (size of an int is 4 bytes on ESP32)
-    esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &sensorData, sizeof(sensorData));
-   
-    if (result == ESP_OK) {
-      //Serial.println("Sent with success");
-      Serial.println(String(sensorData.X) + ',' + String(sensorData.Y) + ',' + String(sensorData.Z) + ', ' + String(sensorData.shot));
-    }
-    else {
-      Serial.println("Error sending the data");
-    }
-  
-  
+ Serial.println(String(sensorData.X) + ',' + String(sensorData.Y) + ',' + String(sensorData.Z)+ ',' +String(sensorData.shot) + ',' +  String(sensorData.actions) + ',' +String(sensorData.magId) +',' +String(sensorData.gunId) + ',' + String(sensorData.shootingMode) +','+String(sensorData.unlock));
+  //char data[32];
+  //snprintf(data, sizeof(data),String(sensorData.X) + ',' + String(sensorData.Y) + ',' + String(sensorData.Z)+ ',' +String(sensorData.shot) + ',' +  String(sensorData.actions) + ',' +String(sensorData.magId) +','+String(sensorData.unlock));
 
+  if (!broadcast_peer.send_message((uint8_t *) &sensorData, sizeof(sensorData))) {
+    Serial.println("Failed to broadcast message");
+  }
 }
 
 //function for reading what part we have inserted (what magazine for example)
@@ -182,22 +226,28 @@ int shoot(){
   return 1;
 }
 
+int transport(){
+  return 1;
+}
+
 //locking the slide when out of ammo
-void lock(){
+int lock(){
   digitalWrite(motorPin1, LOW);
   digitalWrite(motorPin2, HIGH); 
   delay(100);
   digitalWrite(motorPin1, LOW);
   digitalWrite(motorPin2, LOW); 
+  return 1;
 }
 
 //unlock the slide
-void unlock(){
+int unlock(){
   digitalWrite(motorPin1, HIGH);
   digitalWrite(motorPin2, LOW); 
   delay(100);
   digitalWrite(motorPin1, LOW);
   digitalWrite(motorPin2, LOW);
+  return 0;
 }
 
 //movement
@@ -207,6 +257,4 @@ void move(){
   Y = mpu6050.getAngleY() - (OY);
   Z = mpu6050.getAngleZ() - (OZ);
   //Serial.println(String(X) + " " + String(Y) + " " + String(Z));
-  
-
 }
