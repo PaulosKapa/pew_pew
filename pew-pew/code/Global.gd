@@ -28,40 +28,16 @@ var multi_player = preload("res://scenes/multiplayer_test.tscn")
 var env1 = preload("res://environments/environment1.tres")
 #weapons
 var test_weapon = preload("res://scenes/weapon.tscn")
-# Configure the UDP socket for receiving data from Python
-var python_address : String = "127.0.0.1"
-var python_port : int = 12345
 var env2 = preload("res://environments/environment2.tres")
-var python_socket := PacketPeerUDP.new()
-var data_list
-var begin = false
-var mouse = true
 var weapon_id = null
-
-func _ready():
-	# Bind the socket to the specified address and port
-	python_socket.bind(python_port, python_address)
-
-func _process(delta):
-	# Check for incoming data
-	if python_socket.get_available_packet_count() > 0:
-		# Receive data from Python
-		#var data : PacketPeerUDP = python_socket.get_packet()
-		var data = python_socket.get_packet()
-	
-		# Process the received data as needed
-		var decoded_data : String = data.get_string_from_utf8()
-		
-		data_list = decoded_data.split(",")
-		#print(data_list)
-		begin = true
-#setters and getters for if the player uses mouse and keyboard or not. Probably only for debugging
-func set_mouse(m):
-	mouse = m
-func get_mouse():
-	return mouse
+var multiplay = null
 #get and se the weapon that the player will use. The id will be set via the esp. Probably placeholder code for nows
 func get_weapon_id():
 	return(weapon_id)
 func set_weapon_id(weapon):
 	weapon_id = weapon
+func set_multiplay(multi):
+	multiplay = multi
+func get_multiplay():
+	return(multiplay)	
+

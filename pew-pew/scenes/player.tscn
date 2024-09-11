@@ -1,26 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://wyia2heh8blq"]
+[gd_scene load_steps=4 format=3 uid="uid://wyia2heh8blq"]
 
-[ext_resource type="Script" path="res://code/Camera3D.gd" id="1_bbccm"]
 [ext_resource type="Script" path="res://code/player.gd" id="1_oicxo"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_1rt01"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4v25j"]
 size = Vector3(1, 2.005, 1)
 
-[node name="Player" type="RigidBody3D" groups=["player"]]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1rt01"]
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_oicxo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_4v25j")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_1rt01")
 
-[node name="Camera3D" type="Camera3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.39621e-08, 0.605522, -0.502868)
-script = ExtResource("1_bbccm")
+[node name="weapon_holster" type="Node3D" parent="."]
 
-[node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D/Camera3D"]
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.84217e-14, 0.605522, 0.502868)
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
 target_position = Vector3(0, 0, -20)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_4v25j")

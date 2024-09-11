@@ -87,7 +87,7 @@ func death():
 @rpc("call_local")
 func equip_weapon():
 	#placeholder code!!!!! the player will choose his gun at the main menu!! Delete later in production
-	Global.set_weapon_id(3)
+	Global.set_weapon_id(1)
 	
 	#check which of the weapon in the game has the id of the weapon that the player has equiped and use that
 	for weapon in weapons:

@@ -7,7 +7,8 @@ var floors = [Global.test_floor]
 var walls = [Global.test_wall, Global.table, Global.vending_machine, Global.tree1]
 var props = [Global.test_prop, Global.barel_prop, Global.bench_prop, Global.metal_barel_prop, Global.fench_prop]
 var enemies = [Global.test_enemy, Global.enemy_drone001, Global.enemy_drone002, Global.enemy_drone003, Global.enemy_drone004]
-var player = Global.multi_player
+var mplayer = Global.multi_player
+var player = Global.player
 
 func _ready():
 	
@@ -51,7 +52,12 @@ func _ready():
 	#var pl = (player.instantiate())
 	#pl.set_position(child_spawner[2].global_position)
 	#pl.set_rotation(child_spawner[2].global_rotation)
-	add_child(player.instantiate())
+	if(Global.get_multiplay()):
+		add_child(mplayer.instantiate())
+		
+	else:
+		add_child(player.instantiate())
+	
 	
 	#start the timer for the enemy spawner logic
 	$Enemy/Timer.start()

@@ -14,9 +14,17 @@ func _process(delta):
 func _on_play_input_event(_camera, _event, _position, _normal, _shape_idx):
 	
 	if Input.is_action_just_pressed("click"):
+		Global.set_multiplay(false)
 		get_tree().change_scene_to_file("res://scenes/world.tscn")
 
 
 func _on_exit_input_event(_camera, _event, _position, _normal, _shape_idx):
 	if Input.is_action_just_pressed("click"):
 		get_tree().quit()
+
+
+func _on_multi_input_event(camera, event, position, normal, shape_idx):
+	if Input.is_action_just_pressed("click"):
+		Global.set_multiplay(true)
+		get_tree().change_scene_to_file("res://scenes/world.tscn")
+		

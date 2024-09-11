@@ -17,6 +17,7 @@
 
 #include <vector>
 
+int inputVar = 0;
 struct SensorData {
   int X;
   int Y;
@@ -27,105 +28,109 @@ struct SensorData {
   int actions;
   int magId;
   int shootingMode;
+  
+};
+SensorData sData;
+
+struct varData{
+  int inputVar;
 };
 
+uint8_t senderAddress[6]; // To store the sender's MAC address
 
-/* Definitions */
+// Updated callback function with the correct signature
+void OnDataRecv(const esp_now_recv_info *recvInfo, const uint8_t *incomingData, int len) {
+  // Cast the incoming data to the correct structure type
+  SensorData sensorData;
+  memcpy(&sensorData, incomingData, sizeof(sensorData));  // Correctly copy incoming data to the structure
+  
+  Serial.println(String(sensorData.X) + ',' + String(sensorData.Y) + ',' + String(sensorData.Z)+ ',' +String(sensorData.shot) + ',' +  String(sensorData.actions) + ',' +String(sensorData.magId) +',' +String(sensorData.gunId) + ',' + String(sensorData.shootingMode) +','+String(sensorData.unlock));
+  // Save the sender's MAC address for replying
+  memcpy(senderAddress, recvInfo->src_addr, 6);
 
-#define ESPNOW_WIFI_CHANNEL 6
+  // Add the sender as a peer if not already added
+  if (!esp_now_is_peer_exist(senderAddress)) {
+    esp_now_peer_info_t peerInfo;
+    memset(&peerInfo, 0, sizeof(peerInfo));
+    memcpy(peerInfo.peer_addr, senderAddress, 6);
+    peerInfo.channel = 0;  
+    peerInfo.encrypt = false;
 
-/* Classes */
-
-// Creating a new class that inherits from the ESP_NOW_Peer class is required.
-
-class ESP_NOW_Peer_Class : public ESP_NOW_Peer {
-public:
-  // Constructor of the class
-  ESP_NOW_Peer_Class(const uint8_t *mac_addr, uint8_t channel, wifi_interface_t iface, const uint8_t *lmk) : ESP_NOW_Peer(mac_addr, channel, iface, lmk) {}
-
-  // Destructor of the class
-  ~ESP_NOW_Peer_Class() {}
-
-  // Function to register the master peer
-  bool add_peer() {
-    if (!add()) {
-      log_e("Failed to register the broadcast peer");
-      return false;
+    if (esp_now_add_peer(&peerInfo) != ESP_OK) {
+      Serial.println("Failed to add peer");
+    } else {
+      Serial.println("Peer added successfully");
     }
-    return true;
-  }
-
-  // Function to print the received messages from the master
-  void onReceive(const uint8_t *data, size_t len, bool broadcast) {
-    SensorData sensorData;
-   // Serial.printf("Received a message from master " MACSTR " (%s)\n", MAC2STR(addr()), broadcast ? "broadcast" : "unicast");
-    memcpy(&sensorData, data, sizeof(sensorData));
-    Serial.println(String(sensorData.X) + ',' + String(sensorData.Y) + ',' + String(sensorData.Z)+ ',' +String(sensorData.shot) + ',' +  String(sensorData.actions) + ',' +String(sensorData.magId) +',' +String(sensorData.gunId) + ',' + String(sensorData.shootingMode) +','+String(sensorData.unlock));
-  }
-};
-
-/* Global Variables */
-
-// List of all the masters. It will be populated when a new master is registered
-std::vector<ESP_NOW_Peer_Class> masters;
-
-/* Callbacks */
-
-// Callback called when an unknown peer sends a message
-void register_new_master(const esp_now_recv_info_t *info, const uint8_t *data, int len, void *arg) {
-  if (memcmp(info->des_addr, ESP_NOW.BROADCAST_ADDR, 6) == 0) {
-    Serial.printf("Unknown peer " MACSTR " sent a broadcast message\n", MAC2STR(info->src_addr));
-    Serial.println("Registering the peer as a master");
-
-    ESP_NOW_Peer_Class new_master(info->src_addr, ESPNOW_WIFI_CHANNEL, WIFI_IF_STA, NULL);
-
-    masters.push_back(new_master);
-    if (!masters.back().add_peer()) {
-      Serial.println("Failed to register the new master");
-      return;
-    }
-  } else {
-    // The slave will only receive broadcast messages
-    log_v("Received a unicast message from " MACSTR, MAC2STR(info->src_addr));
-    log_v("Igorning the message");
   }
 }
-
-/* Main */
+    
 
 void setup() {
   Serial.begin(115200);
-  while (!Serial) {
-    delay(10);
-  }
+  
 
   // Initialize the Wi-Fi module
   WiFi.mode(WIFI_STA);
-  WiFi.setChannel(ESPNOW_WIFI_CHANNEL);
-  while (!WiFi.STA.started()) {
-    delay(100);
+ // Init ESP-NOW
+  if (esp_now_init() != ESP_OK) {
+    Serial.println("Error initializing ESP-NOW");
+    return;
   }
 
-  Serial.println("ESP-NOW Example - Broadcast Slave");
-  Serial.println("Wi-Fi parameters:");
-  Serial.println("  Mode: STA");
-  Serial.println("  MAC Address: " + WiFi.macAddress());
-  Serial.printf("  Channel: %d\n", ESPNOW_WIFI_CHANNEL);
-
-  // Initialize the ESP-NOW protocol
-  if (!ESP_NOW.begin()) {
-    Serial.println("Failed to initialize ESP-NOW");
-    Serial.println("Reeboting in 5 seconds...");
-    delay(5000);
-    ESP.restart();
-  }
-
-  // Register the new peer callback
-  ESP_NOW.onNewPeer(register_new_master, NULL);
-
-  Serial.println("Setup complete. Waiting for a master to broadcast a message...");
+  // Register the receive callback function
+  esp_now_register_recv_cb(OnDataRecv);
 }
 
+
+varData vData;
 void loop() {
- 
+  if (Serial.available()>0) {
+    // Read the incoming serial data
+    String serialData = Serial.readStringUntil('\n');
+    serialData.trim(); // Remove any trailing whitespace or newline characters
+
+    // Process the serial data
+    if (serialData.length()>0) {
+      // Split the serial data into individual components
+      int commaIndex = serialData.indexOf(',');
+      if (commaIndex != -1) {
+        String messageStr = serialData.substring(0, commaIndex);
+        String positionStr = serialData.substring(commaIndex + 1);
+
+        int message = messageStr.toInt();
+        int position = positionStr.toInt();
+        switch(position){
+          case 9:
+            vData.inputVar = message;
+            
+            break;
+        }
+      }
+       // Send data to the last sender's MAC address
+    esp_err_t result = esp_now_send(senderAddress, (uint8_t *) &vData, sizeof(vData));
+
+    if (result == ESP_OK) {
+      Serial.println("Sent successfully");
+    } else {
+      Serial.print("Error sending the data: ");
+      Serial.println(result);  // Print the error code for further diagnostics
+    }
+
+
+    }
+  //       // // Process the message and position values
+  //       // Serial.print("Received from serial: ");
+  //       // Serial.print("Message = ");
+  //       // Serial.print(message);
+  //       // Serial.print(", Position = ");
+  //       // Serial.println(position);
+        
+
+  //       // Implement your logic here to handle the message and position values
+  //     }
+  //   }
+  // }
+  //sData.inputVar = inputVar;
+//Serial.println(String(sData.X) + ',' + String(sData.Y) + ',' + String(sData.Z)+ ',' +String(sData.shot) + ',' +  String(sData.actions) + ',' +String(sData.magId) +',' +String(sData.gunId) + ',' + String(sData.shootingMode) +','+String(sData.unlock));// +','+String(sData.inputVar));
+}
 }
